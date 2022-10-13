@@ -1,3 +1,183 @@
-/* 
-    General Styles used on every website (Don't Repeat Yourself)
-*/
+/* RESET */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body,
+h1,
+h2,
+h3,
+h4,
+p,
+figure,
+blockquote,
+dl,
+dd {
+  margin: 0;
+}
+
+body {
+  min-height: 100vh;
+  font-family: "Open Sans", sans-serif;
+}
+
+/* STYLES */
+
+/* HOME */
+.home-container {
+  height: 100vh;
+  width: 100vw;
+  position: relative;
+}
+
+.home-bg {
+  object-fit: cover;
+  width: 100vw;
+  height: 100vh;
+}
+
+.home-actions {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  background-color: #fff;
+  padding: 30px;
+  display: flex;
+  justify-content: flex-end;
+  width: 100vw;
+}
+
+.home-action {
+  background: none;
+  border: 2px solid #000;
+  text-align: center;
+  text-transform: uppercase;
+  padding: 15px 30px;
+  font-weight: bold;
+}
+
+.home-actions .home-action {
+  margin-left: 10px;
+}
+
+.home-action--light {
+  background-color: #fff;
+  color: #000;
+}
+
+.home-action--dark {
+  background-color: #000;
+  color: #fff;
+}
+
+/* LOGIN */
+.login-container {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.login-registerLink {
+  margin-top: 100%;
+}
+
+.login-action {
+  background: none;
+  border: 2px solid #000;
+  text-align: center;
+  text-transform: uppercase;
+  padding: 15px 30px;
+  font-weight: 800;
+  background-color: #000;
+  color: #fff;
+}
+
+.login-registerLink {
+  margin-top: 100%;
+}
+
+/* REGISTER */
+.register-container {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.register-action {
+  background: none;
+  border: 2px solid #000;
+  text-align: center;
+  text-transform: uppercase;
+  padding: 15px 30px;
+  font-weight: 800;
+  background-color: #000;
+  color: #fff;
+}
+
+.register-registerLink {
+  margin-top: 100%;
+}
+
+/* FORM */
+.habitsForm-title {
+  text-transform: uppercase;
+  font-weight: 800;
+  margin-bottom: 30px;
+}
+
+.habitsForm {
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+}
+
+.habitsForm-fieldset {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 30px;
+}
+
+.habitsForm-label {
+  font-weight: bold;
+  text-transform: uppercase;
+  margin-bottom: 5px;
+}
+
+.habitsForm-input,
+.habitsForm-input:focus,
+.habitsForm-input:focus-visible {
+  border: 2px solid #000;
+  border-radius: 0;
+  padding: 15px 20px;
+  outline: 0;
+}
+
+.habitsForm-error {
+  color: red;
+  margin-bottom: 30px;
+}
+
+/* LISTS */
+.lists-container {
+  height: 100vh;
+  width: 100vw;
+}
+
+.lists-header {
+  padding: 20px;
+  border-bottom: 2px solid lightgrey;
+}
+
+.lists-date {
+  font-weight: 800;
+  text-transform: uppercase;
+  font-size: 32px;
+}
