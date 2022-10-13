@@ -8,7 +8,8 @@ db = SQLAlchemy()
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(120), unique=True, nullable=False)
-    password = db.Column(db.String(80), unique=False, nullable=False)
+    password = db.Column(db.String(120), unique=False, nullable=False)
+    admin = db.Column(db.Boolean)
 
     setting = relationship('Setting', backref='user')
     todo = relationship('Todo', backref='user')
@@ -20,7 +21,8 @@ class User(db.Model):
     def serialize(self):
         return {
             'id': self.id,
-            'email': self.email
+            'email': self.email,
+            'admin': self.admin
         }
 
 class Setting(db.Model):
@@ -48,7 +50,7 @@ class Todo(db.Model):
     user_id = db.Column(db.Integer,db.ForeignKey('user.id'))
     name = db.Column(db.String(150), unique=False, nullable=False)
     created_at = db.Column(db.DateTime(timezone=True), server_default=func.now())
-    finished_at = db.Column(db.Time, unique=False, nullable=False)
+    finished_at = db.Column(db.Time)
 
     def __repr__(self):
         return f'<Todo {self.id}>'
