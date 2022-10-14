@@ -70,7 +70,6 @@ class Habit(db.Model):
     user_id = db.Column(db.Integer,db.ForeignKey('user.id'))
     name = db.Column(db.String(150), unique=False, nullable=False)
     type = db.Column(db.Integer, unique=False, nullable=False)
-    frequency = db.Column(db.Integer, unique=False, nullable=False)
     num_of_repetitions = db.Column(db.Integer, unique=False, nullable=False)
 
     habit = relationship('HabitNumberOfRepetitions', backref='habit')
@@ -84,7 +83,6 @@ class Habit(db.Model):
             'user_id': self.user.id,
             'name': self.name,
             'type': self.type,
-            'frequency': self.frequency,
             'num_of_repetitions': self.num_of_repetitions,
         }
 

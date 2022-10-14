@@ -150,10 +150,57 @@ def edit_todo(todo_id):
 @api.route('/habit', methods=['POST'])
 @jwt_required()
 def add_habit():
-    return ''
+    data = request.get_json()
 
-# GET HABIT
+    user_email = get_jwt_identity()
+    user = User.query.filter_by(email = user_email).first()
+
+    new_habit = Habit(name = data['name'], type = data['type'], num_of_repetitions = data['num_of_repetitions'], user_id = user.id)
+
+    db.session.add(new_habit)
+    db.session.commit()
+
+    return jsonify({'message': 'New habit created'})
 
 # GET HABITS
+@api.route('/habits', methods=['GET'])
+@jwt_required()
+def get_habits():
+    user_email = get_jwt_identity()
+    user = User.query.filter_by(email = user_email).first()
+    habits = Habit.query.filter_by(user_id = user.id)
+
+    output = []
+
+    for habit in habits:
+        habit_data = {}
+        habit_data['id'] = habit.id
+        habit_data['name'] = habit.name
+        habit_data['type'] = habit.type
+        habit_data['num_of_repetitions'] = habit.num_of_repetitions
+        output.append(habit_data)
+
+    return jsonify({'habits': output})
+
+# GET HABIT
+@api.route('/habit/<habit_id>', methods=['GET'])
+@jwt_required()
+def get_habit(habit_id):
+    habit = Habit.query.filter_by(id = habit_id).first()
+
+    if not habit:
+        return jsonify({'message': 'This habit does not exist'})
+
+    habit_data = {}
+    habit_data['id'] = habit.id
+    habit_data['name'] = habit.name
+    habit_data['type'] = habit.created_at
+    habit_data['num_of_repetitions'] = habit.num_of_repetitions
+
+    return jsonify({'habit': habit_data})
 
 # EDIT HABIT
+@api.route('/habit/<habit_id>', methods=['PUT'])
+@jwt_required()
+def edit_habit(habit_id):
+    return ''
