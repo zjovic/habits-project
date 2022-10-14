@@ -21,6 +21,7 @@ dd {
 body {
   min-height: 100vh;
   font-family: "Open Sans", sans-serif;
+  overflow-x: hidden;
 }
 
 /* STYLES */
@@ -180,4 +181,75 @@ body {
   font-weight: 800;
   text-transform: uppercase;
   font-size: 32px;
+}
+
+.lists-list {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.lists-list li {
+  margin: 20px;
+  font-size: 24px;
+}
+
+.lists-list li:hover {
+  cursor: pointer;
+}
+
+.lists-list.active {
+  display: flex;
+}
+
+.list-tabs {
+  display: flex;
+  margin: 60px auto;
+  justify-content: space-between;
+  width: 80%;
+  min-height: 100px;
+  align-items: center;
+  text-transform: uppercase;
+}
+
+.list-tab {
+  font-weight: 800;
+  font-size: 24px;
+  color: lightgray;
+  transition: font-size 0.25s ease-in;
+}
+
+.list-tab.active {
+  font-weight: 800;
+  font-size: 36px;
+  color: #000;
+  transition: font-size 0.25s ease-out;
+}
+
+.list-tab:hover {
+  cursor: pointer;
+}
+
+/* FOOTER */
+.footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  padding: 20px;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #000;
+  width: 100vw;
+}
+
+.footer-link {
+  font-weight: 800;
+  color: #fff;
+  text-transform: uppercase;
+}
+
+.footer-link:hover {
+  cursor: pointer;
 }

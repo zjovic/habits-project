@@ -20,27 +20,12 @@ export const Login = () => {
       return;
     }
 
-    try {
-      const options = {
-        method: "POST",
-        headers: {
-          "Content-type": "application/json",
-        },
-        body: JSON.stringify({
-          email: email,
-          password: password,
-        }),
-      };
-      const response = await fetch("http://127.0.0.1:3001/api/login", options);
+    await actions.getJWToken({
+      email: email,
+      password: password,
+    });
 
-      if (response.status === 200) {
-        const data = await response.json();
-        sessionStorage.setItem("token", data.access_token);
-        return navigate("/lists");
-      }
-    } catch (error) {
-      console.log("error", error);
-    }
+    return navigate("/lists");
   };
 
   return (
