@@ -1,11 +1,13 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext";
 import { Message } from "../component/message.js";
+import { Footer } from "../component/footer.js";
 
 export const Lists = () => {
   const { store, actions } = useContext(Context);
   const params = useParams();
+  const navigate = useNavigate();
 
   const [date, setDate] = useState("");
   const [activeTab, setActiveTab] = useState("todos");
@@ -23,6 +25,20 @@ export const Lists = () => {
     getCurrentDate();
   }, []);
 
+  // if no todos and no habits, fetch
+  useEffect(() => {
+    actions.storeTokenFromSession();
+
+    if (!sessionStorage.getItem("token") || !store.token) {
+      actions.logout();
+      navigate("/");
+    }
+    if (store.todos.length === 0 || store.habits.length === 0) {
+      actions.fetchTodos();
+      actions.fetchHabits();
+    }
+  }, []);
+
   const handleTodosTab = () => {
     setActiveTab("todos");
   };
@@ -30,8 +46,6 @@ export const Lists = () => {
   const handleHabitsTab = () => {
     setActiveTab("habits");
   };
-
-  // if no todos and no habits, fetch
 
   return (
     <div className="lists-container">
@@ -71,6 +85,7 @@ export const Lists = () => {
           );
         })}
       </ul>
+      <Footer />
     </div>
   );
 };

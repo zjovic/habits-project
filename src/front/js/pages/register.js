@@ -25,28 +25,10 @@ export const Register = (props) => {
       return;
     }
 
-    try {
-      const options = {
-        method: "POST",
-        headers: {
-          "Content-type": "application/json",
-        },
-        body: JSON.stringify({
-          email: email,
-          password: password,
-        }),
-      };
-      const response = await fetch(
-        "http://127.0.0.1:3001/api/register",
-        options
-      );
-
-      if (response.status === 200) {
-        setshowSuccessScreen(true);
-      }
-    } catch (error) {
-      console.log("error", error);
-    }
+    actions.registerUser({
+      password: password,
+      email: email,
+    });
   };
 
   return (

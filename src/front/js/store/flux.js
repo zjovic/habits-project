@@ -1,3 +1,5 @@
+const apiURL = "http://localhost:3001/api";
+
 const getState = ({ getStore, getActions, setStore }) => {
   return {
     store: {
@@ -13,8 +15,67 @@ const getState = ({ getStore, getActions, setStore }) => {
       ],
     },
     actions: {
-      setToken: (token) => {
-        setStore({ token: token });
+      registerUser: async ({ email, password }) => {
+        try {
+          const options = {
+            method: "POST",
+            headers: {
+              "Content-type": "application/json",
+            },
+            body: JSON.stringify({
+              email: email,
+              password: password,
+            }),
+          };
+          const response = await fetch(`${apiURL}/register`, options);
+          if (response.status === 200) {
+            setshowSuccessScreen(true);
+          }
+        } catch (error) {
+          console.log("error", error);
+        }
+      },
+
+      getJWToken: async ({ password, email }) => {
+        try {
+          const options = {
+            method: "POST",
+            headers: {
+              "Content-type": "application/json",
+            },
+            body: JSON.stringify({
+              email: email,
+              password: password,
+            }),
+          };
+
+          const response = await fetch(`${apiURL}/login`, options);
+
+          if (response.status === 200) {
+            const data = await response.json();
+            sessionStorage.setItem("token", data.access_token);
+          }
+        } catch (error) {
+          console.log("error", error);
+        }
+      },
+
+      storeTokenFromSession: () => {
+        const store = getStore();
+        const token = sessionStorage.getItem("token");
+
+        if (token && token != "" && token != undefined && !store.token) {
+          setStore({ token: token });
+        }
+      },
+
+      logout: () => {
+        sessionStorage.removeItem("token");
+        setStore({
+          token: null,
+          todos: [],
+          habits: [],
+        });
       },
 
       fetchTodos: async () => {
@@ -39,6 +100,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.log("Error loading todos from backend", error);
         }
       },
+
       fetchHabits: async () => {
         try {
           const options = {
