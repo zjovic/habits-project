@@ -2,7 +2,9 @@ import React, { useState, useEffect, useContext } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext";
 import { Message } from "../component/message.js";
+import { List } from "../component/list.js";
 import { Footer } from "../component/footer.js";
+import { AddTodo } from "../component/add-to-do.js";
 
 export const Lists = () => {
   const { store, actions } = useContext(Context);
@@ -11,6 +13,7 @@ export const Lists = () => {
 
   const [date, setDate] = useState("");
   const [activeTab, setActiveTab] = useState("todos");
+  const [isStoreEmpty, setIsStoreEmpty] = useState(true);
 
   useEffect(() => {
     const getCurrentDate = async () => {
@@ -33,11 +36,15 @@ export const Lists = () => {
       actions.logout();
       navigate("/");
     }
-    if (store.todos.length === 0 || store.habits.length === 0) {
+    if (isStoreEmpty) {
       actions.fetchTodos();
       actions.fetchHabits();
     }
   }, []);
+
+  useEffect(() => {
+    setIsStoreEmpty(store.todos.length === 0 && store.habits.length === 0);
+  }, [store.todos, store.habits]);
 
   const handleTodosTab = () => {
     setActiveTab("todos");
@@ -67,24 +74,8 @@ export const Lists = () => {
           habits
         </span>
       </div>
-      <ul className={`lists-list ${activeTab === "todos" ? "active" : ""}`}>
-        {store.todos.map((todo, index) => {
-          return (
-            <li className="row" key={index}>
-              {todo.name}
-            </li>
-          );
-        })}
-      </ul>
-      <ul className={`lists-list ${activeTab === "habits" ? "active" : ""}`}>
-        {store.habits.map((habit, index) => {
-          return (
-            <li className="row" key={index}>
-              {habit.name}
-            </li>
-          );
-        })}
-      </ul>
+      {isStoreEmpty ? "" : <List activeTab={activeTab} />}
+      {activeTab === "todos" ? <AddTodo /> : ""}
       <Footer />
     </div>
   );

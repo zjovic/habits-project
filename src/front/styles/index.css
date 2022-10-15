@@ -184,7 +184,7 @@ body {
 }
 
 .lists-list {
-  display: none;
+  display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
@@ -197,10 +197,6 @@ body {
 
 .lists-list li:hover {
   cursor: pointer;
-}
-
-.lists-list.active {
-  display: flex;
 }
 
 .list-tabs {
@@ -229,6 +225,24 @@ body {
 
 .list-tab:hover {
   cursor: pointer;
+}
+
+/* ADD TODO ACTION */
+.add-todo-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+}
+
+.add-todo-action {
+  background: none;
+  border: 2px solid #000;
+  text-align: center;
+  text-transform: uppercase;
+  padding: 0 30px;
+  font-weight: 800;
+  background-color: #000;
+  color: #fff;
 }
 
 /* FOOTER */
