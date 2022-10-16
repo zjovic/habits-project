@@ -5,6 +5,7 @@ import { Message } from "../component/message.js";
 import { List } from "../component/list.js";
 import { Footer } from "../component/footer.js";
 import { AddTodo } from "../component/add-to-do.js";
+import { Tabs } from "../component/tabs.js";
 
 export const Lists = () => {
   const { store, actions } = useContext(Context);
@@ -13,7 +14,7 @@ export const Lists = () => {
 
   const [date, setDate] = useState("");
   const [activeTab, setActiveTab] = useState("todos");
-  const [isStoreEmpty, setIsStoreEmpty] = useState(true);
+  const [listHasItems, setListHasItems] = useState(false);
 
   useEffect(() => {
     const getCurrentDate = async () => {
@@ -28,7 +29,6 @@ export const Lists = () => {
     getCurrentDate();
   }, []);
 
-  // if no todos and no habits, fetch
   useEffect(() => {
     actions.storeTokenFromSession();
 
@@ -36,22 +36,18 @@ export const Lists = () => {
       actions.logout();
       navigate("/");
     }
-    if (isStoreEmpty) {
-      actions.fetchTodos();
-      actions.fetchHabits();
-    }
   }, []);
 
   useEffect(() => {
-    setIsStoreEmpty(store.todos.length === 0 && store.habits.length === 0);
+    if (store.todos.length !== 0 || store.habits.length !== 0) {
+      setListHasItems(true);
+    } else {
+      setListHasItems(false);
+    }
   }, [store.todos, store.habits]);
 
-  const handleTodosTab = () => {
-    setActiveTab("todos");
-  };
-
-  const handleHabitsTab = () => {
-    setActiveTab("habits");
+  const handleTabToggle = (tab) => {
+    tab === "todos" ? setActiveTab("todos") : setActiveTab("habits");
   };
 
   return (
@@ -60,21 +56,8 @@ export const Lists = () => {
         <span className="lists-date">{date}</span>
         <Message />
       </div>
-      <div className="list-tabs">
-        <span
-          className={`list-tab ${activeTab === "todos" ? "active" : ""}`}
-          onClick={handleTodosTab}
-        >
-          todos
-        </span>
-        <span
-          className={`list-tab ${activeTab === "habits" ? "active" : ""}`}
-          onClick={handleHabitsTab}
-        >
-          habits
-        </span>
-      </div>
-      {isStoreEmpty ? "" : <List activeTab={activeTab} />}
+      <Tabs handleTabToggle={handleTabToggle} />
+      {listHasItems ? <List activeTab={activeTab} /> : ""}
       {activeTab === "todos" ? <AddTodo /> : ""}
       <Footer />
     </div>

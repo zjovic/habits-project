@@ -8,6 +8,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_jwt_extended import create_access_token
 from flask_jwt_extended import get_jwt_identity
 from flask_jwt_extended import jwt_required
+from datetime import datetime
 
 api = Blueprint('api', __name__)
 
@@ -101,7 +102,22 @@ def add_todo():
     db.session.add(new_todo)
     db.session.commit()
 
-    return jsonify({'message': 'New todo created'})
+    user_email = get_jwt_identity()
+    user = User.query.filter_by(email = user_email).first()
+    todos = Todo.query.filter_by(user_id = user.id)
+
+    output = []
+
+    for todo in todos:
+        todo_data = {}
+        todo_data['id'] = todo.id
+        todo_data['name'] = todo.name
+        todo_data['created_at'] = todo.created_at
+        todo_data['state'] = todo.state
+        output.append(todo_data)
+
+    return jsonify({'todos': output})
+
 
 # GET TODO
 @api.route('/todo/<todo_id>', methods=['GET'])
@@ -116,7 +132,7 @@ def get_todo(todo_id):
     todo_data['id'] = todo.id
     todo_data['name'] = todo.name
     todo_data['created_at'] = todo.created_at
-    todo_data['finished_at'] = todo.finished_at
+    todo_data['state'] = todo.state
 
     return jsonify({'todo': todo_data})
 
@@ -135,16 +151,41 @@ def get_todos():
         todo_data['id'] = todo.id
         todo_data['name'] = todo.name
         todo_data['created_at'] = todo.created_at
-        todo_data['finished_at'] = todo.finished_at
+        todo_data['state'] = todo.state
         output.append(todo_data)
 
     return jsonify({'todos': output})
 
-# EDIT TODO
+# DELETE TODO
+@api.route('/todo/<todo_id>', methods=['DELETE'])
+@jwt_required()
+def delete_todo(todo_id):
+        todo = Todo.query.filter_by(id=todo_id).first()
+        
+        if not todo:
+            return jsonify({'message': 'This todo does not exist'})
+  
+        db.session.delete(todo)
+        db.session.commit()
+
+        return jsonify(todo.serialize()),200
+
+# TOGGLE TODO
 @api.route('/todo/<todo_id>', methods=['PUT'])
 @jwt_required()
 def edit_todo(todo_id):
-    return ''
+    todo = Todo.query.filter_by(id=todo_id).first()
+        
+    if not todo:
+        return jsonify({'message': 'This todo does not exist'})
+
+    new_state = 1 if todo.state == 0 else 0
+
+    setattr(todo, 'state', new_state)
+
+    db.session.commit()
+    
+    return jsonify(todo.serialize()),200
 
 # ADD HABIT
 @api.route('/habit', methods=['POST'])

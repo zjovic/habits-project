@@ -190,13 +190,19 @@ body {
   justify-content: center;
 }
 
-.lists-list li {
+.lists-item {
   margin: 20px;
   font-size: 24px;
+  list-style-type: none;
 }
 
-.lists-list li:hover {
+.lists-item:hover {
   cursor: pointer;
+}
+
+.lists-item.finished {
+  text-decoration: line-through;
+  color: lightgray;
 }
 
 .list-tabs {
