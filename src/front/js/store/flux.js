@@ -86,18 +86,106 @@ const getState = ({ getStore, getActions, setStore }) => {
               Authorization: `Bearer ${sessionStorage.getItem("token")}`,
             },
           };
-          const response = await fetch(
-            "http://127.0.0.1:3001/api/todos",
-            options
-          );
+          const response = await fetch(`${apiURL}/todos`, options);
+
+          if (response.status === 401) {
+            getActions().logout();
+          }
           const data = await response.json();
 
           const store = getStore();
-          const currTodos = [...store.todos, ...data.todos];
+          const currTodos = data.todos;
 
           setStore({ todos: currTodos });
         } catch (error) {
           console.log("Error loading todos from backend", error);
+        }
+      },
+
+      addTodo: async (name) => {
+        try {
+          const options = {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+              "Content-type": "application/json",
+            },
+            body: JSON.stringify({
+              name: name,
+            }),
+          };
+
+          const response = await fetch(`${apiURL}/todo`, options);
+
+          if (response.status === 200) {
+            const data = await response.json();
+            const store = getStore();
+            const currTodos = data.todos;
+
+            setStore({ todos: currTodos });
+          }
+        } catch (error) {
+          console.log("error", error);
+        }
+      },
+
+      deleteTodo: async (id) => {
+        try {
+          const options = {
+            method: "DELETE",
+            headers: {
+              Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+            },
+          };
+
+          const response = await fetch(`${apiURL}/todo/${id}`, options);
+
+          if (response.status === 200) {
+            const data = await response.json();
+
+            const store = getStore();
+            const deleted_id = data.id;
+
+            const filteredTodos = store.todos.filter(({ id }) => {
+              return id !== deleted_id;
+            });
+
+            setStore({ todos: filteredTodos });
+          }
+        } catch (error) {
+          console.log("error", error);
+        }
+      },
+
+      toggleTodo: async (id) => {
+        try {
+          const options = {
+            method: "PUT",
+            headers: {
+              Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+            },
+          };
+
+          const response = await fetch(`${apiURL}/todo/${id}`, options);
+
+          if (response.status === 200) {
+            const data = await response.json();
+
+            const store = getStore();
+            const toggled_todo_id = data.id;
+
+            const updatedTodos = store.todos.map((todo) => {
+              if (todo.id === toggled_todo_id) {
+                return { ...todo, state: data.state };
+              }
+
+              return todo;
+            });
+
+            setStore({ todos: updatedTodos });
+          }
+        } catch (error) {
+          console.log("error", error);
         }
       },
 
@@ -109,10 +197,12 @@ const getState = ({ getStore, getActions, setStore }) => {
               Authorization: `Bearer ${sessionStorage.getItem("token")}`,
             },
           };
-          const response = await fetch(
-            "http://127.0.0.1:3001/api/habits",
-            options
-          );
+          const response = await fetch(`${apiURL}/habits`, options);
+
+          if (response.status === 401) {
+            getActions().logout();
+          }
+
           const data = await response.json();
 
           const store = getStore();
