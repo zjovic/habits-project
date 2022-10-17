@@ -8,6 +8,7 @@ export const Register = (props) => {
 
   const [showErrorMessage, setShowErrorMessage] = useState(false);
   const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [changePassword, setChangePassword] = useState("");
   const [showSuccessScreen, setshowSuccessScreen] = useState(false);
@@ -20,7 +21,7 @@ export const Register = (props) => {
     e.preventDefault();
     setShowErrorMessage(false);
 
-    if (!passwordMatch || !password || !email) {
+    if (!passwordMatch || !password || !email || !name) {
       setShowErrorMessage(true);
       return;
     }
@@ -28,6 +29,7 @@ export const Register = (props) => {
     actions.registerUser({
       password: password,
       email: email,
+      name: name,
     });
   };
 
@@ -54,6 +56,21 @@ export const Register = (props) => {
                 value={email}
                 onChange={(e) => {
                   setEmail(e.target.value);
+                }}
+              />
+            </fieldset>
+            <fieldset className="habitsForm-fieldset">
+              <label className="habitsForm-label" htmlFor="name">
+                Name
+              </label>
+              <input
+                id="name"
+                className="habitsForm-input"
+                type="text"
+                name="name"
+                value={name}
+                onChange={(e) => {
+                  setName(e.target.value);
                 }}
               />
             </fieldset>

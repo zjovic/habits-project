@@ -21,7 +21,7 @@ def register_user():
 
     hashed_password = generate_password_hash(data['password'], method = 'sha256')
 
-    new_user = User(email = data['email'], password = hashed_password, admin = 0)
+    new_user = User(email = data['email'], name = data['name'], password = hashed_password, admin = 0)
 
     db.session.add(new_user)
     db.session.commit()
@@ -66,6 +66,7 @@ def get_user(user_id):
     user_data = {}
     user_data['id'] = user.id
     user_data['email'] = user.email
+    user_data['name'] = user.name
     user_data['password'] = user.password
     user_data['admin'] = user.admin
 
@@ -83,6 +84,7 @@ def get_users():
         user_data = {}
         user_data['id'] = user.id
         user_data['email'] = user.email
+        user_data['name'] = user.name
         user_data['password'] = user.password
         user_data['admin'] = user.admin
         output.append(user_data)

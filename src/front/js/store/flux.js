@@ -15,7 +15,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       ],
     },
     actions: {
-      registerUser: async ({ email, password }) => {
+      registerUser: async ({ email, password, name }) => {
         try {
           const options = {
             method: "POST",
@@ -25,6 +25,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             body: JSON.stringify({
               email: email,
               password: password,
+              name: name,
             }),
           };
           const response = await fetch(`${apiURL}/register`, options);
