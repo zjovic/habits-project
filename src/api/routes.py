@@ -305,10 +305,10 @@ def edit_settings():
     user_email = get_jwt_identity()
     user = User.query.filter_by(email = user_email).first()
 
-    settings = Setting.query.filter_by(user_id = user.id).first()
-
     if not settings:
         return jsonify({'message': 'This user does not exist'}), 500
+
+    settings = Setting.query.filter_by(user_id = user.id).first()
     
     setattr(settings, 'mode', data['mode'])
     setattr(settings, 'lang', data['lang'])
@@ -318,3 +318,22 @@ def edit_settings():
     db.session.commit()
 
     return jsonify(settings.serialize()), 200
+
+# CHANGE PASSWORD
+@api.route('/password', methods=['PUT'])
+@jwt_required()
+def edit_password():
+    data = request.get_json()
+    user_email = get_jwt_identity()
+    user = User.query.filter_by(email = user_email).first()
+
+    if not user:
+        return jsonify({'message': 'This user does not exist'}), 500
+
+    hashed_password = generate_password_hash(data['password'], method = 'sha256')
+    
+    setattr(user, 'password', hashed_password)
+    
+    db.session.commit()
+
+    return jsonify(user.serialize()), 200
