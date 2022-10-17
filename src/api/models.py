@@ -42,8 +42,8 @@ class Setting(db.Model):
             'user_id': self.user_id,
             'mode': self.mode,
             'lang': self.lang,
-            'day_start': self.day_start,
-            'day_end': self.day_end,
+            'day_start': self.day_start.strftime("%H:%M:%S"),
+            'day_end': self.day_end.strftime("%H:%M:%S"),
         }
 
 class Todo(db.Model):

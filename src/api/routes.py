@@ -12,6 +12,8 @@ from datetime import datetime
 
 api = Blueprint('api', __name__)
 
+# add validations to routes
+
 # REGISTER USER
 @api.route('/register', methods=['POST'])
 def register_user():
@@ -235,7 +237,7 @@ def get_habit(habit_id):
     habit_data = {}
     habit_data['id'] = habit.id
     habit_data['name'] = habit.name
-    habit_data['type'] = habit.created_at
+    habit_data['type'] = habit.type
     habit_data['num_of_repetitions'] = habit.num_of_repetitions
 
     return jsonify({'habit': habit_data})
@@ -244,4 +246,73 @@ def get_habit(habit_id):
 @api.route('/habit/<habit_id>', methods=['PUT'])
 @jwt_required()
 def edit_habit(habit_id):
-    return ''
+    data = request.get_json()
+
+    habit = Habit.query.filter_by(id = habit_id).first()
+
+    if not habit:
+        return jsonify({'message': 'This habit does not exist'}), 500
+    
+    setattr(habit, 'name', data['name'])
+    setattr(habit, 'type', data['type'])
+    setattr(habit, 'num_of_repetitions', data['num_of_repetitions'])
+    
+    db.session.commit()
+    return jsonify(habit.serialize()), 200
+
+# DELETE HABIT
+@api.route('/habit/<habit_id>', methods=['DELETE'])
+@jwt_required()
+def delete_habit(habit_id):
+        habit = Habit.query.filter_by(id=habit_id).first()
+        
+        if not habit:
+            return jsonify({'message': 'This todo does not exist'})
+  
+        db.session.delete(habit)
+        db.session.commit()
+
+        return jsonify({'message': 'Habit deleted'}),200
+
+# GET SETTINGS
+@api.route('/settings', methods=['GET'])
+@jwt_required()
+def get_settings():
+    user_email = get_jwt_identity()
+    user = User.query.filter_by(email = user_email).first()
+
+    data = Setting.query.filter_by(user_id = user.id).first()
+
+    if not data:
+        return jsonify({'message': 'This todo does not exist'})
+
+    setting_data = {}
+    setting_data['id'] = data.id
+    setting_data['mode'] = data.mode
+    setting_data['lang'] = data.lang
+    setting_data['day_start'] = data.day_start.strftime("%H:%M:%S")
+    setting_data['day_end'] = data.day_end.strftime("%H:%M:%S")
+
+    return jsonify({'settings': setting_data})
+
+# EDIT SETTINGS
+@api.route('/settings', methods=['PUT'])
+@jwt_required()
+def edit_settings():
+    data = request.get_json(force=True)
+    user_email = get_jwt_identity()
+    user = User.query.filter_by(email = user_email).first()
+
+    settings = Setting.query.filter_by(user_id = user.id).first()
+
+    if not settings:
+        return jsonify({'message': 'This user does not exist'}), 500
+    
+    setattr(settings, 'mode', data['mode'])
+    setattr(settings, 'lang', data['lang'])
+    setattr(settings, 'day_start', data['day_start'])
+    setattr(settings, 'day_end', data['day_end'])
+    
+    db.session.commit()
+
+    return jsonify(settings.serialize()), 200
