@@ -305,7 +305,7 @@ def edit_settings():
     user_email = get_jwt_identity()
     user = User.query.filter_by(email = user_email).first()
 
-    if not settings:
+    if not user:
         return jsonify({'message': 'This user does not exist'}), 500
 
     settings = Setting.query.filter_by(user_id = user.id).first()
