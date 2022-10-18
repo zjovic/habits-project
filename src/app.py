@@ -12,8 +12,10 @@ from api.routes import api
 from api.admin import setup_admin
 from api.commands import setup_commands
 from flask_jwt_extended import JWTManager
+from flask_apscheduler import APScheduler
+from api.models import User, Setting, Todo
+from datetime import datetime
 
-#from models import Person
 
 ENV = os.getenv("FLASK_ENV")
 static_file_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), '../public/')
@@ -24,7 +26,7 @@ app.url_map.strict_slashes = False
 app.config["JWT_SECRET_KEY"] = os.environ.get("JWT_SECRET")
 jwt = JWTManager(app)
 
-# database condiguration
+# Database configuration
 db_url = os.getenv("DATABASE_URL")
 if db_url is not None:
     app.config['SQLALCHEMY_DATABASE_URI'] = db_url.replace("postgres://", "postgresql://")
@@ -73,3 +75,29 @@ def serve_any_other_file(path):
 if __name__ == '__main__':
     PORT = int(os.environ.get('PORT', 3001))
     app.run(host='0.0.0.0', port=PORT, debug=True)
+
+# Scheduled task
+scheduler = APScheduler()
+
+def scheduledTask():
+    with app.app_context():
+        users = User.query.all()
+
+        current_time_string = datetime.now().strftime("%H:%M:%S")
+        current_time = datetime.strptime(current_time_string,"%H:%M:%S")
+
+        for user in users:
+            settings = Setting.query.filter_by(user_id = user.id).first()
+            user_set_time_string = settings.day_end.strftime("%H:%M:%S")
+            user_set_time = datetime.strptime(user_set_time_string,"%H:%M:%S")
+
+            if (current_time > user_set_time):
+                todos_to_delete = Todo.query.filter_by(user_id = user.id, state = 0).all()
+
+                for todo in todos_to_delete:
+                    db.session.delete(todo)
+                    db.session.commit() 
+
+scheduler.add_job(id = "Scheduled task", func = scheduledTask, trigger = "interval", seconds = 60)
+scheduler.start()
+app.run(host="0.0.0.0", port = 8080)
