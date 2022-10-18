@@ -123,6 +123,50 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.log("Error loading habits from backend", error);
         }
       },
+
+      
+        registerNameOfTheUser: async ({ userName }) => {
+          try {
+            const options = {
+              method: "PUT",
+              headers: {
+                "Content-type": "application/json",
+              },
+              body: JSON.stringify({
+                userName: userName,
+              }),
+            };
+            const response = await fetch(`${apiURL}/user`, options);
+            if (response.status === 200) {
+              setshowSuccessScreen(true);
+            }
+          } catch (error) {
+            console.log("error", error);
+          }
+        },
+
+        changePassWord: async ({ password, newPassword }) => {
+          try {
+            const options = {
+              method: "PUT",
+              headers: {
+                "Content-type": "application/json",
+              },
+              body: JSON.stringify({
+                password: password,
+                newPassword: newPassword,
+              }),
+            };
+            const response = await fetch(`${apiURL}/register`, options);
+            if (response.status === 200) {
+              setshowSuccessScreen(true);
+            }
+          } catch (error) {
+            console.log("error", error);
+          }
+        },
+
+
     },
   };
 };
