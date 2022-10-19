@@ -2,7 +2,10 @@ import React, { useState, useEffect, useContext } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext";
 import { Message } from "../component/message.js";
+import { List } from "../component/list.js";
 import { Footer } from "../component/footer.js";
+import { AddTodo } from "../component/add-to-do.js";
+import { Tabs } from "../component/tabs.js";
 
 export const Lists = () => {
   const { store, actions } = useContext(Context);
@@ -11,6 +14,7 @@ export const Lists = () => {
 
   const [date, setDate] = useState("");
   const [activeTab, setActiveTab] = useState("todos");
+  const [listHasItems, setListHasItems] = useState(false);
 
   useEffect(() => {
     const getCurrentDate = async () => {
@@ -25,7 +29,6 @@ export const Lists = () => {
     getCurrentDate();
   }, []);
 
-  // if no todos and no habits, fetch
   useEffect(() => {
     actions.storeTokenFromSession();
 
@@ -33,18 +36,18 @@ export const Lists = () => {
       actions.logout();
       navigate("/");
     }
-    if (store.todos.length === 0 || store.habits.length === 0) {
-      actions.fetchTodos();
-      actions.fetchHabits();
-    }
   }, []);
 
-  const handleTodosTab = () => {
-    setActiveTab("todos");
-  };
+  useEffect(() => {
+    if (store.todos.length !== 0 || store.habits.length !== 0) {
+      setListHasItems(true);
+    } else {
+      setListHasItems(false);
+    }
+  }, [store.todos, store.habits]);
 
-  const handleHabitsTab = () => {
-    setActiveTab("habits");
+  const handleTabToggle = (tab) => {
+    tab === "todos" ? setActiveTab("todos") : setActiveTab("habits");
   };
 
   return (
@@ -53,38 +56,9 @@ export const Lists = () => {
         <span className="lists-date">{date}</span>
         <Message />
       </div>
-      <div className="list-tabs">
-        <span
-          className={`list-tab ${activeTab === "todos" ? "active" : ""}`}
-          onClick={handleTodosTab}
-        >
-          todos
-        </span>
-        <span
-          className={`list-tab ${activeTab === "habits" ? "active" : ""}`}
-          onClick={handleHabitsTab}
-        >
-          habits
-        </span>
-      </div>
-      <ul className={`lists-list ${activeTab === "todos" ? "active" : ""}`}>
-        {store.todos.map((todo, index) => {
-          return (
-            <li className="row" key={index}>
-              {todo.name}
-            </li>
-          );
-        })}
-      </ul>
-      <ul className={`lists-list ${activeTab === "habits" ? "active" : ""}`}>
-        {store.habits.map((habit, index) => {
-          return (
-            <li className="row" key={index}>
-              {habit.name}
-            </li>
-          );
-        })}
-      </ul>
+      <Tabs handleTabToggle={handleTabToggle} />
+      {listHasItems ? <List activeTab={activeTab} /> : ""}
+      {activeTab === "todos" ? <AddTodo /> : ""}
       <Footer />
     </div>
   );

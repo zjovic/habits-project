@@ -8,8 +8,11 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_jwt_extended import create_access_token
 from flask_jwt_extended import get_jwt_identity
 from flask_jwt_extended import jwt_required
+from datetime import datetime
 
 api = Blueprint('api', __name__)
+
+# add validations to routes
 
 # REGISTER USER
 @api.route('/register', methods=['POST'])
@@ -18,7 +21,7 @@ def register_user():
 
     hashed_password = generate_password_hash(data['password'], method = 'sha256')
 
-    new_user = User(email = data['email'], password = hashed_password, admin = 0)
+    new_user = User(email = data['email'], name = data['name'], password = hashed_password, admin = 0)
 
     db.session.add(new_user)
     db.session.commit()
@@ -63,6 +66,7 @@ def get_user(user_id):
     user_data = {}
     user_data['id'] = user.id
     user_data['email'] = user.email
+    user_data['name'] = user.name
     user_data['password'] = user.password
     user_data['admin'] = user.admin
 
@@ -80,6 +84,7 @@ def get_users():
         user_data = {}
         user_data['id'] = user.id
         user_data['email'] = user.email
+        user_data['name'] = user.name
         user_data['password'] = user.password
         user_data['admin'] = user.admin
         output.append(user_data)
@@ -101,7 +106,22 @@ def add_todo():
     db.session.add(new_todo)
     db.session.commit()
 
-    return jsonify({'message': 'New todo created'})
+    user_email = get_jwt_identity()
+    user = User.query.filter_by(email = user_email).first()
+    todos = Todo.query.filter_by(user_id = user.id)
+
+    output = []
+
+    for todo in todos:
+        todo_data = {}
+        todo_data['id'] = todo.id
+        todo_data['name'] = todo.name
+        todo_data['created_at'] = todo.created_at
+        todo_data['state'] = todo.state
+        output.append(todo_data)
+
+    return jsonify({'todos': output})
+
 
 # GET TODO
 @api.route('/todo/<todo_id>', methods=['GET'])
@@ -116,7 +136,7 @@ def get_todo(todo_id):
     todo_data['id'] = todo.id
     todo_data['name'] = todo.name
     todo_data['created_at'] = todo.created_at
-    todo_data['finished_at'] = todo.finished_at
+    todo_data['state'] = todo.state
 
     return jsonify({'todo': todo_data})
 
@@ -135,16 +155,41 @@ def get_todos():
         todo_data['id'] = todo.id
         todo_data['name'] = todo.name
         todo_data['created_at'] = todo.created_at
-        todo_data['finished_at'] = todo.finished_at
+        todo_data['state'] = todo.state
         output.append(todo_data)
 
     return jsonify({'todos': output})
 
-# EDIT TODO
+# DELETE TODO
+@api.route('/todo/<todo_id>', methods=['DELETE'])
+@jwt_required()
+def delete_todo(todo_id):
+        todo = Todo.query.filter_by(id=todo_id).first()
+        
+        if not todo:
+            return jsonify({'message': 'This todo does not exist'})
+  
+        db.session.delete(todo)
+        db.session.commit()
+
+        return jsonify(todo.serialize()),200
+
+# TOGGLE TODO
 @api.route('/todo/<todo_id>', methods=['PUT'])
 @jwt_required()
 def edit_todo(todo_id):
-    return ''
+    todo = Todo.query.filter_by(id=todo_id).first()
+        
+    if not todo:
+        return jsonify({'message': 'This todo does not exist'})
+
+    new_state = 1 if todo.state == 0 else 0
+
+    setattr(todo, 'state', new_state)
+
+    db.session.commit()
+    
+    return jsonify(todo.serialize()),200
 
 # ADD HABIT
 @api.route('/habit', methods=['POST'])
@@ -194,7 +239,7 @@ def get_habit(habit_id):
     habit_data = {}
     habit_data['id'] = habit.id
     habit_data['name'] = habit.name
-    habit_data['type'] = habit.created_at
+    habit_data['type'] = habit.type
     habit_data['num_of_repetitions'] = habit.num_of_repetitions
 
     return jsonify({'habit': habit_data})
@@ -203,4 +248,92 @@ def get_habit(habit_id):
 @api.route('/habit/<habit_id>', methods=['PUT'])
 @jwt_required()
 def edit_habit(habit_id):
-    return ''
+    data = request.get_json()
+
+    habit = Habit.query.filter_by(id = habit_id).first()
+
+    if not habit:
+        return jsonify({'message': 'This habit does not exist'}), 500
+    
+    setattr(habit, 'name', data['name'])
+    setattr(habit, 'type', data['type'])
+    setattr(habit, 'num_of_repetitions', data['num_of_repetitions'])
+    
+    db.session.commit()
+    return jsonify(habit.serialize()), 200
+
+# DELETE HABIT
+@api.route('/habit/<habit_id>', methods=['DELETE'])
+@jwt_required()
+def delete_habit(habit_id):
+        habit = Habit.query.filter_by(id=habit_id).first()
+        
+        if not habit:
+            return jsonify({'message': 'This todo does not exist'})
+  
+        db.session.delete(habit)
+        db.session.commit()
+
+        return jsonify({'message': 'Habit deleted'}),200
+
+# GET SETTINGS
+@api.route('/settings', methods=['GET'])
+@jwt_required()
+def get_settings():
+    user_email = get_jwt_identity()
+    user = User.query.filter_by(email = user_email).first()
+
+    data = Setting.query.filter_by(user_id = user.id).first()
+
+    if not data:
+        return jsonify({'message': 'This todo does not exist'})
+
+    setting_data = {}
+    setting_data['id'] = data.id
+    setting_data['mode'] = data.mode
+    setting_data['lang'] = data.lang
+    setting_data['day_start'] = data.day_start.strftime("%H:%M:%S")
+    setting_data['day_end'] = data.day_end.strftime("%H:%M:%S")
+
+    return jsonify({'settings': setting_data})
+
+# EDIT SETTINGS
+@api.route('/settings', methods=['PUT'])
+@jwt_required()
+def edit_settings():
+    data = request.get_json(force=True)
+    user_email = get_jwt_identity()
+    user = User.query.filter_by(email = user_email).first()
+
+    if not user:
+        return jsonify({'message': 'This user does not exist'}), 500
+
+    settings = Setting.query.filter_by(user_id = user.id).first()
+    
+    setattr(settings, 'mode', data['mode'])
+    setattr(settings, 'lang', data['lang'])
+    setattr(settings, 'day_start', data['day_start'])
+    setattr(settings, 'day_end', data['day_end'])
+    
+    db.session.commit()
+
+    return jsonify(settings.serialize()), 200
+
+# CHANGE PASSWORD
+@api.route('/password', methods=['PUT'])
+@jwt_required()
+def edit_password():
+    data = request.get_json()
+    user_email = get_jwt_identity()
+    user = User.query.filter_by(email = user_email).first()
+
+    if not user:
+        return jsonify({'message': 'This user does not exist'}), 500
+
+    hashed_password = generate_password_hash(data['password'], method = 'sha256')
+    
+    setattr(user, 'password', hashed_password)
+    
+    db.session.commit()
+
+    return jsonify(user.serialize()), 200
