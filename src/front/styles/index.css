@@ -183,28 +183,30 @@ body {
   font-size: 32px;
 }
 
-.lists-list {
+/* TODO LIST */
+.todos-list {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
 }
 
-.lists-item {
+.todos-list-item {
   margin: 20px;
   font-size: 24px;
   list-style-type: none;
 }
 
-.lists-item:hover {
+.todos-list-item:hover {
   cursor: pointer;
 }
 
-.lists-item.finished {
+.todos-list-item.finished {
   text-decoration: line-through;
   color: lightgray;
 }
 
+/* LISTS TABS */
 .list-tabs {
   display: flex;
   margin: 60px auto;
@@ -249,6 +251,57 @@ body {
   font-weight: 800;
   background-color: #000;
   color: #fff;
+}
+
+/* HABITS LIST */
+.habits-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.habits-list-item {
+  margin: 20px;
+  font-size: 24px;
+  list-style-type: none;
+  display: flex;
+  justify-content: space-between;
+  width: 500px;
+}
+
+.habit {
+  flex: 1;
+  margin: 0 50px;
+}
+
+.habit-action {
+  background: none;
+  border: 2px solid #000;
+  text-align: center;
+  text-transform: uppercase;
+  padding: 15px 30px;
+  font-weight: bold;
+}
+
+/* PROGRESS */
+.progress {
+  width: 100%;
+  height: 6px;
+  border-radius: 0;
+}
+
+.progress-bar {
+  background-color: #000;
+}
+
+.progress-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  font-size: 12px;
+  font-weight: 800;
+  margin-bottom: 5px;
 }
 
 /* FOOTER */

@@ -223,6 +223,7 @@ def get_habits():
         habit_data['name'] = habit.name
         habit_data['type'] = habit.type
         habit_data['num_of_repetitions'] = habit.num_of_repetitions
+        habit_data['num_times_repeated'] = habit.num_times_repeated
         output.append(habit_data)
 
     return jsonify({'habits': output})
@@ -241,6 +242,7 @@ def get_habit(habit_id):
     habit_data['name'] = habit.name
     habit_data['type'] = habit.type
     habit_data['num_of_repetitions'] = habit.num_of_repetitions
+    habit_data['num_times_repeated'] = habit.num_times_repeated
 
     return jsonify({'habit': habit_data})
 
@@ -258,6 +260,7 @@ def edit_habit(habit_id):
     setattr(habit, 'name', data['name'])
     setattr(habit, 'type', data['type'])
     setattr(habit, 'num_of_repetitions', data['num_of_repetitions'])
+    setattr(habit, 'num_times_repeated', data['num_times_repeated'])
     
     db.session.commit()
     return jsonify(habit.serialize()), 200
