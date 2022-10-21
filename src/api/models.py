@@ -73,6 +73,7 @@ class Habit(db.Model):
     name = db.Column(db.String(150), unique=False, nullable=False)
     type = db.Column(db.Integer, unique=False, nullable=False, default=1)
     num_of_repetitions = db.Column(db.Integer, unique=False, nullable=False)
+    num_times_repeated = db.Column(db.Integer, unique=False, nullable=False, default=0)
 
     habit = relationship('HabitNumberOfRepetitions', backref='habit')
 
@@ -86,6 +87,7 @@ class Habit(db.Model):
             'name': self.name,
             'type': self.type,
             'num_of_repetitions': self.num_of_repetitions,
+            'num_times_repeated': self.num_times_repeated,
         }
 
 class HabitNumberOfRepetitions(db.Model):

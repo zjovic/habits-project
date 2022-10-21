@@ -83,6 +83,8 @@ def scheduledTask():
     with app.app_context():
         users = User.query.all()
 
+        print('Scheduled task')
+
         current_time_string = datetime.now().strftime("%H:%M:%S")
         current_time = datetime.strptime(current_time_string,"%H:%M:%S")
 
@@ -98,6 +100,6 @@ def scheduledTask():
                     db.session.delete(todo)
                     db.session.commit() 
 
-scheduler.add_job(id = "Scheduled task", func = scheduledTask, trigger = "interval", seconds = 60)
+scheduler.add_job(id = "Scheduled task", func = scheduledTask, trigger = "interval", seconds = 3600)
 scheduler.start()
 app.run(host="0.0.0.0", port = 8080)
