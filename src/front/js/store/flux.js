@@ -215,6 +215,29 @@ const getState = ({ getStore, getActions, setStore }) => {
         }
       },
 
+      // fetch of the new habit
+      registerNewHabit: async ({ newhabits, timesaday, typeofhabit }) => {
+        try {
+          const options = {
+            method: "POST",
+            headers: {
+              "Content-type": "application/json",
+            },
+            body: JSON.stringify({
+              new_habit: newhabits,
+              num_of_repetitions: timesaday,
+              type: typeofhabit,
+            }),
+          };
+          const response = await fetch(`${apiURL}/habit`, options);
+          if (response.status === 200) {
+            setshowSuccessScreen(true);
+          }
+        } catch (error) {
+          console.log("error", error);
+        }
+      },
+
       
         registerNameOfTheUser: async ({ userName }) => {
           try {
@@ -256,6 +279,69 @@ const getState = ({ getStore, getActions, setStore }) => {
             console.log("error", error);
           }
         },
+
+        // fetch of the  Name of the User
+        registerNameOfTheUser: async ({ userName }) => {
+          try {
+            const options = {
+            method: "PUT",
+            headers: {
+              "Content-type": "application/json",
+            },
+            body: JSON.stringify({
+              userName: userName,
+            }),
+            };
+            const response = await fetch(`${apiURL}/user`, options);
+            if (response.status === 200) {
+            setshowSuccessScreen(true);
+            }
+          } catch (error) {
+            console.log("error", error);
+          }
+          },
+  
+          // fetch of the  theme/mode
+          registerModeOfTheUser: async ({ typeofmode }) => {
+          try {
+            const options = {
+            method: "PUT",
+            headers: {
+              "Content-type": "application/json",
+            },
+            body: JSON.stringify({
+              mode: typeofmode,
+            }),
+            };
+            const response = await fetch(`${apiURL}/settings`, options);
+            if (response.status === 200) {
+            setshowSuccessScreen(true);
+            }
+          } catch (error) {
+            console.log("error", error);
+          }
+          },
+      
+          // fetch of the change pass
+          changePassWord: async ({ newPassword }) => {
+          try {
+            const options = {
+            method: "PUT",
+            headers: {
+              "Content-type": "application/json",
+            },
+            body: JSON.stringify({
+              password: newPassword,
+            }),
+            };
+            const response = await fetch(`${apiURL}/password`, options);
+            if (response.status === 200) {
+            setshowSuccessScreen(true);
+            }
+          } catch (error) {
+            console.log("error", error);
+          }
+          },
 
 
     },
