@@ -6,6 +6,7 @@ import { Home } from "./pages/home";
 import { Login } from "./pages/login";
 import { Register } from "./pages/register";
 import { Lists } from "./pages/lists";
+import { Settings } from "./pages/settings";
 import injectContext from "./store/appContext";
 
 //create your first component
@@ -23,6 +24,7 @@ const App = () => {
             <Route element={<Login />} path="/login" />
             <Route element={<Register />} path="/register" />
             <Route element={<Lists />} path="/lists" />
+            <Route element={<Settings />} path="/settings" />
             <Route element={<h1>Not found!</h1>} />
           </Routes>
         </ScrollToTop>

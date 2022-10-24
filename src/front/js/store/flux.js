@@ -215,21 +215,56 @@ const getState = ({ getStore, getActions, setStore }) => {
         }
       },
 
-      // fetch of the new habit
-      registerNewHabit: async ({ newhabits, timesaday, typeofhabit }) => {
+      editHabit: async ({ id, habitName, type, repetitions, repeated }) => {
         try {
           const options = {
-            method: "POST",
+            method: "PUT",
+            headers: {
+              Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+              "Content-type": "application/json",
+            },
+            body: JSON.stringify({
+              name: habitName,
+              type: type,
+              num_of_repetitions: repetitions,
+              num_times_repeated: repeated,
+            }),
+          };
+          const response = await fetch(`${apiURL}/habit/${id}`, options);
+
+          if (response.status === 401) {
+            getActions().logout();
+          }
+
+          const data = await response.json();
+          const editedHabitId = data.id;
+
+          const updatedHabit = store.habits.map((habit) => {
+            if (habit.id === editedHabitId) {
+              return { ...data };
+            }
+
+            return todo;
+          });
+
+          setStore({ habits: updatedHabit });
+        } catch (error) {
+          console.log("Error loading habits from backend", error);
+        }
+      },
+
+      registerNameOfTheUser: async ({ userName }) => {
+        try {
+          const options = {
+            method: "PUT",
             headers: {
               "Content-type": "application/json",
             },
             body: JSON.stringify({
-              new_habit: newhabits,
-              num_of_repetitions: timesaday,
-              type: typeofhabit,
+              userName: userName,
             }),
           };
-          const response = await fetch(`${apiURL}/habit`, options);
+          const response = await fetch(`${apiURL}/user`, options);
           if (response.status === 200) {
             setshowSuccessScreen(true);
           }
@@ -238,112 +273,26 @@ const getState = ({ getStore, getActions, setStore }) => {
         }
       },
 
-      
-        registerNameOfTheUser: async ({ userName }) => {
-          try {
-            const options = {
-              method: "PUT",
-              headers: {
-                "Content-type": "application/json",
-              },
-              body: JSON.stringify({
-                userName: userName,
-              }),
-            };
-            const response = await fetch(`${apiURL}/user`, options);
-            if (response.status === 200) {
-              setshowSuccessScreen(true);
-            }
-          } catch (error) {
-            console.log("error", error);
-          }
-        },
-
-        changePassWord: async ({ password, newPassword }) => {
-          try {
-            const options = {
-              method: "PUT",
-              headers: {
-                "Content-type": "application/json",
-              },
-              body: JSON.stringify({
-                password: password,
-                newPassword: newPassword,
-              }),
-            };
-            const response = await fetch(`${apiURL}/register`, options);
-            if (response.status === 200) {
-              setshowSuccessScreen(true);
-            }
-          } catch (error) {
-            console.log("error", error);
-          }
-        },
-
-        // fetch of the  Name of the User
-        registerNameOfTheUser: async ({ userName }) => {
-          try {
-            const options = {
+      changePassWord: async ({ password, newPassword }) => {
+        try {
+          const options = {
             method: "PUT",
             headers: {
               "Content-type": "application/json",
             },
             body: JSON.stringify({
-              userName: userName,
+              password: password,
+              newPassword: newPassword,
             }),
-            };
-            const response = await fetch(`${apiURL}/user`, options);
-            if (response.status === 200) {
+          };
+          const response = await fetch(`${apiURL}/register`, options);
+          if (response.status === 200) {
             setshowSuccessScreen(true);
-            }
-          } catch (error) {
-            console.log("error", error);
           }
-          },
-  
-          // fetch of the  theme/mode
-          registerModeOfTheUser: async ({ typeofmode }) => {
-          try {
-            const options = {
-            method: "PUT",
-            headers: {
-              "Content-type": "application/json",
-            },
-            body: JSON.stringify({
-              mode: typeofmode,
-            }),
-            };
-            const response = await fetch(`${apiURL}/settings`, options);
-            if (response.status === 200) {
-            setshowSuccessScreen(true);
-            }
-          } catch (error) {
-            console.log("error", error);
-          }
-          },
-      
-          // fetch of the change pass
-          changePassWord: async ({ newPassword }) => {
-          try {
-            const options = {
-            method: "PUT",
-            headers: {
-              "Content-type": "application/json",
-            },
-            body: JSON.stringify({
-              password: newPassword,
-            }),
-            };
-            const response = await fetch(`${apiURL}/password`, options);
-            if (response.status === 200) {
-            setshowSuccessScreen(true);
-            }
-          } catch (error) {
-            console.log("error", error);
-          }
-          },
-
-
+        } catch (error) {
+          console.log("error", error);
+        }
+      },
     },
   };
 };

@@ -15,7 +15,7 @@ export const List = ({ activeTab }) => {
     let list;
     activeTab === "todos" ? (list = store.todos) : (list = store.habits);
     setItems(list);
-  }, [activeTab, store.todos, store.habits]);
+  }, [activeTab]);
 
   return (
     <div>

@@ -12,10 +12,8 @@ export const Settings = () => {
   const [typeofhabit, setTypeOfHabit] = useState();
   const [userName, setUserName] = useState();
   const [changePassWord, setchangePassWord] = useState();
-  const [typeoftheme, setTypeOfTheme] = useState();
 
   const { store, actions } = useContext(Context);
-
 
   const createHabit = () => {
     console.log(userName, timesaday, typeofhabit);
@@ -48,7 +46,7 @@ export const Settings = () => {
               <path d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52l-.094-.319zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115l.094-.319z" />
             </svg>
           </div>
-          <div className="col">Theme</div>
+          <div className="col">App Settings</div>
           <div className="col">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -151,15 +149,13 @@ export const Settings = () => {
           </div>
           <div className="col">Profile picture</div>
           <div className="col">
-          <svg
+            <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"
               height="16"
               fill="currentColor"
               className="bi bi-arrow-right-square"
               viewBox="0 0 16 16"
-              data-bs-toggle="modal"
-              data-bs-target="#exampleModal03"
             >
               <path
                 fill-rule="evenodd"
@@ -229,34 +225,16 @@ export const Settings = () => {
           >
             <div className="modal-dialog">
               <div className="modal-content">
-                <div>
-                  <h5>THEME</h5>
-                  <input
-                    type="radio"
-                    id="good"
-                    name="scales"
-                    onClick={() => {
-                      setTypeOfTheme("Dark");
-                    }}
-                  ></input>
-                  <label for="scales">Dark</label>
-
-                  <input
-                    type="radio"
-                    id="bad"
-                    name="scales"
-                    onClick={() => {
-                      setTypeOfTheme("White");
-                    }}
-                  ></input>
-                  <label for="horns">White</label>
+                <div className="modal-header">
+                  <h1 className="modal-title fs-5" id="exampleModalLabel">
+                    App Settings *
+                  </h1>
                 </div>
-                {/* <div className="modal-header">
-                <h1 className="modal-title fs-5" id="exampleModalLabel">Theme</h1>
-              </div>
-              <div className="modal-body">
-              <span className="border border-4 border-dark"><input type="text" id="username" name="username" ></input></span>
-              </div> */}
+                <div className="modal-body">
+                  <span className="border border-4 border-dark">
+                    <input type="text" id="username" name="username"></input>
+                  </span>
+                </div>
                 <div className="modal-footer">
                   <button type="button" className="btn btn-dark rounded-0">
                     SUBMIT
@@ -301,11 +279,7 @@ export const Settings = () => {
                   </span>
                 </div>
                 <div className="modal-footer">
-                  <button
-                    type="button"
-                    className="btn btn-dark rounded-0"
-                    onClick={actions.registerNameOfTheUser(userName)}
-                  >
+                  <button type="button" className="btn btn-dark rounded-0">
                     SUBMIT
                   </button>
                   <button
@@ -349,7 +323,7 @@ export const Settings = () => {
                         id="username"
                         name="username"
                         onChange={(e) => setchangePassWord(e.target.value)}
-                        value={changePassWord}
+                        value={userName}
                       ></input>
                     </span>
                   </div>
@@ -365,11 +339,7 @@ export const Settings = () => {
                 </div>
 
                 <div className="modal-footer">
-                  <button
-                    type="button"
-                    className="btn btn-dark rounded-0"
-                    onClick={actions.changePassWord(changePassWord)}
-                  >
+                  <button type="button" className="btn btn-dark rounded-0">
                     SUBMIT
                   </button>
                   <button
@@ -385,51 +355,6 @@ export const Settings = () => {
           </div>
 
           {/* part que executa o modal do Profile picture  -> modal 03*/}
-
-          <div
-            className="modal fade"
-            id="exampleModal03"
-            tabindex="-1"
-            aria-labelledby="exampleModalLabel03"
-            aria-hidden="true"
-          >
-            <div className="modal-dialog">
-              <div className="modal-content">
-                <div className="modal-header">
-                  <h1 className="modal-title fs-5" id="exampleModalLabel03">
-                    {<Avatar name={userName} />}
-                  </h1>
-                </div>
-                <div className="modal-body">
-                  <span className="border border-4 border-dark">
-                    <input
-                      type="text"
-                      id="username"
-                      name="username"
-                      onChange={(e) => setUserName(e.target.value)}
-                      value={userName}
-                    ></input>
-                  </span>
-                </div>
-                <div className="modal-footer">
-                  <button
-                    type="button"
-                    className="btn btn-dark rounded-0"
-                    onClick={actions.registerNameOfTheUser(userName)}
-                  >
-                    SUBMIT
-                  </button>
-                  <button
-                    className="btn btn-outline-dark rounded-0 me-2"
-                    data-bs-dismiss="modal"
-                    aria-label="Close"
-                  >
-                    CANCEL
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
 
           {/* part que executa o modal do Habits*/}
 
@@ -536,18 +461,16 @@ export const Settings = () => {
   );
 };
 
-
 //<div className="text-center">
-{/* <div>
+{
+  /* <div>
         <input type="checkbox" id="coding" name="interest" value="coding" />
         <label for="coding">Coding</label>
       </div>
       <div>
         <input type="checkbox" id="music" name="interest" value="music" />
         <label for="music">Music</label>
-      </div> */}
+      </div> */
+}
 
-      // EM PROFILE NAME corrigir opção de por o nome
-
-
-   
+// EM PROFILE NAME corrigir opção de por o nome
