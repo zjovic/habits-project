@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { Link, useParams } from "react-router-dom";
 import { Context } from "../store/appContext";
 
-export const Register = (props) => {
+export const Register = () => {
   const { store, actions } = useContext(Context);
   const params = useParams();
 
@@ -26,11 +26,15 @@ export const Register = (props) => {
       return;
     }
 
-    actions.registerUser({
-      password: password,
-      email: email,
-      name: name,
-    });
+    try {
+      await actions.registerUser({
+        password: password,
+        email: email,
+        name: name,
+      });
+    } catch (error) {
+      console.log("registration error", error);
+    }
   };
 
   return (

@@ -1,21 +1,19 @@
 import React, { useState, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
 import { Context } from "../store/appContext";
-import { Link, useParams } from "react-router-dom";
 import { Progress } from "./progress";
 
-export const HabitsItem = ({ item }) => {
+export const HabitsItem = ({ habit }) => {
   const { store, actions } = useContext(Context);
-  const params = useParams();
 
-  const [habitName, setHabitName] = useState(item.name);
-  const [type, setType] = useState(item.type);
-  const [repetitions, setRepetitions] = useState(item.num_of_repetitions);
-  const [repeated, setRepeated] = useState(item.num_times_repeated);
+  const [habitName, setHabitName] = useState(habit.name);
+  const [type, setType] = useState(habit.type);
+  const [repetitions, setRepetitions] = useState(habit.num_of_repetitions);
+  const [repeated, setRepeated] = useState(habit.num_times_repeated);
 
   useEffect(() => {
     actions.editHabit({
-      id: item.id,
+      id: habit.id,
       habitName: habitName,
       type: type,
       repetitions: repetitions,
@@ -24,7 +22,7 @@ export const HabitsItem = ({ item }) => {
   }, [repeated]);
 
   return (
-    <li className="habits-list-item" key={item.id}>
+    <li className="habits-list-item" key={habit.id}>
       <button
         className="habit-action"
         onClick={() => setRepeated(repeated - 1)}
@@ -33,7 +31,7 @@ export const HabitsItem = ({ item }) => {
       </button>
       <div className="habit">
         <p className="habit-name">{habitName}</p>
-        {item.num_of_repetitions > 0 ? (
+        {habit.num_of_repetitions > 0 ? (
           <Progress num={repeated} max={repetitions} />
         ) : (
           ""
@@ -50,5 +48,5 @@ export const HabitsItem = ({ item }) => {
 };
 
 HabitsItem.propTypes = {
-  item: PropTypes.object,
+  habit: PropTypes.object,
 };

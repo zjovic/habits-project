@@ -13,8 +13,13 @@ const getState = ({ getStore, getActions, setStore }) => {
         "Good habits are worth being fanatical about.",
         "Habits change into character.",
       ],
+      loading: false,
     },
     actions: {
+      setLoading: (bool) => {
+        setStore({ loading: bool });
+      },
+
       registerUser: async ({ email, password, name }) => {
         try {
           const options = {
@@ -239,12 +244,14 @@ const getState = ({ getStore, getActions, setStore }) => {
           const data = await response.json();
           const editedHabitId = data.id;
 
+          const store = getStore();
+
           const updatedHabit = store.habits.map((habit) => {
             if (habit.id === editedHabitId) {
               return { ...data };
             }
 
-            return todo;
+            return habit;
           });
 
           setStore({ habits: updatedHabit });
