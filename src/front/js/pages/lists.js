@@ -29,14 +29,14 @@ export const Lists = () => {
     getCurrentDate();
   }, []);
 
-  useEffect(() => {
-    actions.storeTokenFromSession();
+  // useEffect(() => {
+  //   actions.storeTokenFromSession();
 
-    if (!sessionStorage.getItem("token") || !store.token) {
-      actions.logout();
-      navigate("/");
-    }
-  }, []);
+  //   if (!sessionStorage.getItem("token") || !store.token) {
+  //     actions.logout();
+  //     navigate("/");
+  //   }
+  // }, []);
 
   useEffect(() => {
     if (store.todos.length !== 0 || store.habits.length !== 0) {

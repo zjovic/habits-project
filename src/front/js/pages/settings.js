@@ -2,26 +2,22 @@ import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { Context } from "../store/appContext";
+import { ChangePassword } from "../component/changepassword";
+// import { HabitsModal } from "../component/habits_modal";
+import { Theme } from "../component/theme";
 import Avatar from "react-avatar";
 import "../../styles/settings.css";
 
 export const Settings = () => {
   const [userhabit, setUserHabit] = useState();
   const [timesaday, setTimesADay] = useState();
-  // const [howoften, setHowOften]=useState();
   const [typeofhabit, setTypeOfHabit] = useState();
-  const [userName, setUserName] = useState();
-  const [changePassWord, setchangePassWord] = useState();
+  const [userName, setUserName] = useState("juliana achiame");
   const [typeoftheme, setTypeOfTheme] = useState();
+  const [newhabit, setNewHabit] = useState();
 
   const { store, actions } = useContext(Context);
 
-
-  const createHabit = () => {
-    console.log(userName, timesaday, typeofhabit);
-  };
-
-  //  , howoften
 
   const dataHabits = store?.habits;
   console.log(dataHabits);
@@ -32,6 +28,13 @@ export const Settings = () => {
 
   return (
     <div className="container">
+
+      {/* part que executa o modal do Profile picture  -> modal 03*/}
+
+      <div>
+        {<Avatar name={userName} />}
+      </div>
+
       <fieldset>
         <div className="row align-items-start">
           <legend>SETTINGS</legend>
@@ -204,76 +207,11 @@ export const Settings = () => {
 
           <p></p>
 
-          {/* <div className="col">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-check-square-fill" viewBox="0 0 16 16">
-            <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm10.03 4.97a.75.75 0 0 1 .011 1.05l-3.992 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.75.75 0 0 1 1.08-.022z"/>
-          </svg>
-        </div>
-        <div className="col">
-          Todo's
-        </div>
-        <div className="col">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-arrow-right-square" viewBox="0 0 16 16">
-            <path fill-rule="evenodd" d="M15 2a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2zM0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm4.5 5.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H4.5z"/>
-          </svg>
-        </div> */}
+          {/* part que executa o modal do Theme */}
 
-          {/* part que executa o modal do settings*/}
+          <Theme />
 
-          <div
-            className="modal fade"
-            id="exampleModal00"
-            tabindex="-1"
-            aria-labelledby="exampleModal00Label"
-            aria-hidden="true"
-          >
-            <div className="modal-dialog">
-              <div className="modal-content">
-                <div>
-                  <h5>THEME</h5>
-                  <input
-                    type="radio"
-                    id="good"
-                    name="scales"
-                    onClick={() => {
-                      setTypeOfTheme("Dark");
-                    }}
-                  ></input>
-                  <label for="scales">Dark</label>
-
-                  <input
-                    type="radio"
-                    id="bad"
-                    name="scales"
-                    onClick={() => {
-                      setTypeOfTheme("White");
-                    }}
-                  ></input>
-                  <label for="horns">White</label>
-                </div>
-                {/* <div className="modal-header">
-                <h1 className="modal-title fs-5" id="exampleModalLabel">Theme</h1>
-              </div>
-              <div className="modal-body">
-              <span className="border border-4 border-dark"><input type="text" id="username" name="username" ></input></span>
-              </div> */}
-                <div className="modal-footer">
-                  <button type="button" className="btn btn-dark rounded-0">
-                    SUBMIT
-                  </button>
-                  <button
-                    className="btn btn-outline-dark rounded-0 me-2"
-                    data-bs-dismiss="modal"
-                    aria-label="Close"
-                  >
-                    CANCEL
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* part que executa o modal do profile name*/}
+          {/* part que executa o modal do profile name - MANTER*/}
 
           <div
             className="modal fade"
@@ -322,116 +260,11 @@ export const Settings = () => {
 
           {/* part que executa o modal do Password*/}
 
-          <div
-            className="modal fade"
-            id="exampleModal02"
-            tabindex="-1"
-            aria-labelledby="exampleModal02Label"
-            aria-hidden="true"
-          >
-            <div className="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-              <div className="modal-content">
-                <div className="modal-header">
-                  <h2 className="fs-5">CURRENT PASSWORD *</h2>
-                  <div className="modal-body">
-                    <span className="border border-dark">
-                      <input type="text" id="username" name="username"></input>
-                    </span>
-                  </div>
-                </div>
-
-                <div className="modal-header">
-                  <h2 className="fs-5">NEW PASSWORD *</h2>
-                  <div className="modal-body">
-                    <span className="border border-dark">
-                      <input
-                        type="text"
-                        id="username"
-                        name="username"
-                        onChange={(e) => setchangePassWord(e.target.value)}
-                        value={changePassWord}
-                      ></input>
-                    </span>
-                  </div>
-                </div>
-
-                <div className="modal-header">
-                  <h2 className="fs-5">CONFIRM PASSWORD *</h2>
-                  <div className="modal-body">
-                    <span className="border border-dark">
-                      <input type="text" id="username" name="username"></input>
-                    </span>
-                  </div>
-                </div>
-
-                <div className="modal-footer">
-                  <button
-                    type="button"
-                    className="btn btn-dark rounded-0"
-                    onClick={actions.changePassWord(changePassWord)}
-                  >
-                    SUBMIT
-                  </button>
-                  <button
-                    className="btn btn-outline-dark rounded-0 me-2"
-                    data-bs-dismiss="modal"
-                    aria-label="Close"
-                  >
-                    CANCEL
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* part que executa o modal do Profile picture  -> modal 03*/}
-
-          <div
-            className="modal fade"
-            id="exampleModal03"
-            tabindex="-1"
-            aria-labelledby="exampleModalLabel03"
-            aria-hidden="true"
-          >
-            <div className="modal-dialog">
-              <div className="modal-content">
-                <div className="modal-header">
-                  <h1 className="modal-title fs-5" id="exampleModalLabel03">
-                    {<Avatar name={userName} />}
-                  </h1>
-                </div>
-                <div className="modal-body">
-                  <span className="border border-4 border-dark">
-                    <input
-                      type="text"
-                      id="username"
-                      name="username"
-                      onChange={(e) => setUserName(e.target.value)}
-                      value={userName}
-                    ></input>
-                  </span>
-                </div>
-                <div className="modal-footer">
-                  <button
-                    type="button"
-                    className="btn btn-dark rounded-0"
-                    onClick={actions.registerNameOfTheUser(userName)}
-                  >
-                    SUBMIT
-                  </button>
-                  <button
-                    className="btn btn-outline-dark rounded-0 me-2"
-                    data-bs-dismiss="modal"
-                    aria-label="Close"
-                  >
-                    CANCEL
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
+          <ChangePassword />
 
           {/* part que executa o modal do Habits*/}
+
+          {/* <HabitsModal /> */}
 
           <div
             className="modal fade"
@@ -450,8 +283,8 @@ export const Settings = () => {
                         type="text"
                         id="userhabit"
                         name="userhabit"
-                        onChange={(e) => setUserHabit(e.target.value)}
-                        value={userhabit}
+                        onChange={(e) => setNewHabit(e.target.value)}
+                        value={newhabit}
                       ></input>
                     </span>
                   </div>
@@ -498,14 +331,6 @@ export const Settings = () => {
 
                   <br></br>
 
-                  {/* <div>
-              <h5>HOW OFTEN?</h5>
-              <span className="border border-4 border-dark"><input type="text" id="username" name="username" 
-              onChange={e => setHowOften(e.target.value)}
-              value={howoften}
-              ></input>
-              </span>
-              </div> */}
                 </div>
 
                 <div className="modal-footer">
@@ -513,7 +338,7 @@ export const Settings = () => {
                     type="button"
                     className="btn btn-dark rounded-0"
                     onClick={() => {
-                      actions.AddHabits(username, timesaday, typeofhabit);
+                      actions.registerNewHabit(newhabit, timesaday, typeofhabit);
                     }}
                   >
                     SUBMIT
@@ -530,24 +355,11 @@ export const Settings = () => {
               </div>
             </div>
           </div>
+
         </div>
       </fieldset>
     </div>
   );
 };
-
-
-//<div className="text-center">
-{/* <div>
-        <input type="checkbox" id="coding" name="interest" value="coding" />
-        <label for="coding">Coding</label>
-      </div>
-      <div>
-        <input type="checkbox" id="music" name="interest" value="music" />
-        <label for="music">Music</label>
-      </div> */}
-
-      // EM PROFILE NAME corrigir opção de por o nome
-
 
    
