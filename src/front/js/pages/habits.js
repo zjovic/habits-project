@@ -22,7 +22,7 @@ export const Habits = () => {
       getHabits();
     }
   }, []);
-
+  // accomodate for empty state
   return (
     <div>
       <Header />

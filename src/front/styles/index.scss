@@ -32,6 +32,7 @@ ol {
 }
 
 /* STYLES */
+
 /* HOME */
 .home-container {
   height: 100vh;
@@ -40,8 +41,7 @@ ol {
 }
 
 .home-bg {
-  -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
   width: 100vw;
   height: 100vh;
 }
@@ -351,72 +351,85 @@ ol {
   justify-content: center;
   align-items: center;
   flex-direction: column;
-}
-.ProfilePhoto-imgWrap {
-  height: 90px;
-  width: 90px;
-  border: 2px solid #000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 15px;
-}
-.ProfilePhoto-img {
-  background-color: lightgray;
-  height: 96%;
-  width: 96%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #000;
-  font-size: 32px;
-  font-weight: 800;
-}
-.ProfilePhoto h3 {
-  font-weight: 800;
-  text-transform: uppercase;
+
+  &-imgWrap {
+    height: 90px;
+    width: 90px;
+    border: 2px solid #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 15px;
+  }
+
+  &-img {
+    background-color: lightgray;
+    height: 96%;
+    width: 96%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #000;
+    font-size: 32px;
+    font-weight: 800;
+  }
+
+  h3 {
+    font-weight: 800;
+    text-transform: uppercase;
+  }
 }
 
-.SettingsList-section {
-  margin-bottom: 20px;
-}
-.SettingsList-sectionTitle {
-  font-weight: 800;
-  font-size: 14px;
-  text-transform: uppercase;
-  margin-bottom: 10px;
-}
-.SettingsList-item {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 10px;
-}
-.SettingsList-item:hover {
-  cursor: pointer;
-}
-.SettingsList-item p {
-  flex: 4;
-  text-align: left;
-  margin-left: 15px;
+.SettingsList {
+  &-section {
+    margin-bottom: 20px;
+  }
+
+  &-sectionTitle {
+    font-weight: 800;
+    font-size: 14px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  &-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+
+    &:hover {
+      cursor: pointer;
+    }
+
+    p {
+      flex: 4;
+      text-align: left;
+      margin-left: 15px;
+    }
+  }
 }
 
+// BOOTSTRAP MODAL OVERRIDE
 .modal-footer {
   border-top: none;
 }
 
+// BUTTONS
 .Button {
   border: 2px solid #000;
   text-align: center;
   text-transform: uppercase;
   padding: 15px 30px;
   font-weight: bold;
+
+  &--confirm {
+    background: #000;
+    color: #fff;
+  }
+
+  &--cancel {
+    background: none;
+    color: #000;
+  }
 }
-.Button--confirm {
-  background: #000;
-  color: #fff;
-}
-.Button--cancel {
-  background: none;
-  color: #000;
-}/*# sourceMappingURL=index.css.map */

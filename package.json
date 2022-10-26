@@ -73,6 +73,7 @@
 		]
 	},
 	"dependencies": {
+		"node-sass": "^7.0.3",
 		"prop-types": "^15.6.1",
 		"python": "^0.0.4",
 		"react": "^16.8.4",

@@ -27,11 +27,14 @@ export const Register = () => {
     }
 
     try {
+      actions.setLoading(true);
       await actions.registerUser({
         password: password,
         email: email,
         name: name,
       });
+      actions.setLoading(false);
+      setshowSuccessScreen(true);
     } catch (error) {
       console.log("registration error", error);
     }

@@ -55,20 +55,26 @@ def login():
     return jsonify({'Message': 'Could not verify!'}), 401
 
 # GET USER
-@api.route('/user/<user_id>', methods=['GET'])
+@api.route('/user', methods=['GET'])
 @jwt_required()
-def get_user(user_id):
-    user = User.query.filter_by(id = user_id).first()
+def get_user():
+    user_email = get_jwt_identity()
+    user = User.query.filter_by(email = user_email).first()
 
     if not user:
         return jsonify({'message': 'No user found!'})
+
+    settings = Setting.query.filter_by(user_id = user.id).first()
 
     user_data = {}
     user_data['id'] = user.id
     user_data['email'] = user.email
     user_data['name'] = user.name
-    user_data['password'] = user.password
     user_data['admin'] = user.admin
+    user_data['mode'] = settings.mode
+    user_data['lang'] = settings.lang
+    user_data['day_start'] = settings.day_start.strftime("%H:%M:%S")
+    user_data['day_end'] = settings.day_end.strftime("%H:%M:%S")
 
     return jsonify({'user': user_data})
 
@@ -85,7 +91,6 @@ def get_users():
         user_data['id'] = user.id
         user_data['email'] = user.email
         user_data['name'] = user.name
-        user_data['password'] = user.password
         user_data['admin'] = user.admin
         output.append(user_data)
 
@@ -109,7 +114,7 @@ def add_todo():
     user_email = get_jwt_identity()
     user = User.query.filter_by(email = user_email).first()
     todos = Todo.query.filter_by(user_id = user.id)
-
+# serialize output
     output = []
 
     for todo in todos:
@@ -333,9 +338,29 @@ def edit_password():
     if not user:
         return jsonify({'message': 'This user does not exist'}), 500
 
-    hashed_password = generate_password_hash(data['password'], method = 'sha256')
+    if not check_password_hash(user.password, data['current_password']):
+        return jsonify({'message': 'Wrong password!'}), 500
+
+    hashed_new_password = generate_password_hash(data['new_password'], method = 'sha256')
+
+    setattr(user, 'password', hashed_new_password)
     
-    setattr(user, 'password', hashed_password)
+    db.session.commit()
+
+    return jsonify({'message': 'Password changed'})
+
+# CHANGE NAME
+@api.route('/user/name', methods=['PUT'])
+@jwt_required()
+def edit_name():
+    data = request.get_json()
+    user_email = get_jwt_identity()
+    user = User.query.filter_by(email = user_email).first()
+
+    if not user:
+        return jsonify({'message': 'This user does not exist'}), 500
+    
+    setattr(user, 'name', data['name'])
     
     db.session.commit()
 

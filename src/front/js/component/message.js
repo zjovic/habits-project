@@ -8,9 +8,7 @@ export const Message = () => {
 
   useEffect(() => {
     const generateMessage = async () => {
-      const randomIndex = Math.floor(
-        Math.random() * (store.messages.length + 1)
-      );
+      const randomIndex = Math.floor(Math.random() * store.messages.length);
       const message = store.messages[randomIndex];
       setMessage(message);
     };

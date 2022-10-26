@@ -30,6 +30,7 @@ export const Todos = () => {
     actions.toggleTodo(id);
   };
 
+  // accomodate for empty state
   return (
     <div>
       <Header />
