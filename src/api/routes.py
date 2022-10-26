@@ -110,23 +110,8 @@ def add_todo():
 
     db.session.add(new_todo)
     db.session.commit()
-
-    user_email = get_jwt_identity()
-    user = User.query.filter_by(email = user_email).first()
-    todos = Todo.query.filter_by(user_id = user.id)
-# serialize output
-    output = []
-
-    for todo in todos:
-        todo_data = {}
-        todo_data['id'] = todo.id
-        todo_data['name'] = todo.name
-        todo_data['created_at'] = todo.created_at
-        todo_data['state'] = todo.state
-        output.append(todo_data)
-
-    return jsonify({'todos': output})
-
+    
+    return jsonify(new_todo.serialize()), 200
 
 # GET TODO
 @api.route('/todo/<todo_id>', methods=['GET'])
@@ -210,7 +195,7 @@ def add_habit():
     db.session.add(new_habit)
     db.session.commit()
 
-    return jsonify({'message': 'New habit created'})
+    return jsonify(new_habit.serialize()), 200
 
 # GET HABITS
 @api.route('/habits', methods=['GET'])

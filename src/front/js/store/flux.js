@@ -123,7 +123,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           if (response.status === 200) {
             const data = await response.json();
             const store = getStore();
-            const currTodos = data.todos;
+            const currTodos = [...store.todos, data];
 
             setStore({ todos: currTodos });
           }
