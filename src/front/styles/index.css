@@ -135,39 +135,40 @@ ol {
 }
 
 /* FORM */
-.habitsForm-title {
-  text-transform: uppercase;
-  font-weight: 800;
-  margin-bottom: 30px;
-}
-
 .habitsForm {
   display: flex;
   flex-direction: column;
   width: 300px;
 }
-
+.habitsForm-title {
+  text-transform: uppercase;
+  font-weight: 800;
+  margin-bottom: 30px;
+}
 .habitsForm-fieldset {
   display: flex;
   flex-direction: column;
   margin-bottom: 30px;
 }
-
+.habitsForm-legend {
+  text-transform: uppercase;
+  font-weight: 800;
+  font-size: 16px;
+}
 .habitsForm-label {
   font-weight: bold;
   text-transform: uppercase;
   margin-bottom: 5px;
 }
-
-.habitsForm-input,
-.habitsForm-input:focus,
-.habitsForm-input:focus-visible {
+.habitsForm-input, .habitsForm-input:focus, .habitsForm-input:focus-visible {
   border: 2px solid #000;
   border-radius: 0;
   padding: 15px 20px;
   outline: 0;
 }
-
+.habitsForm-input[type=radio] {
+  margin: 0 10px;
+}
 .habitsForm-error {
   color: red;
   margin-bottom: 30px;
@@ -177,17 +178,6 @@ ol {
 .lists-container {
   height: 100vh;
   width: 100vw;
-}
-
-.lists-header {
-  padding: 20px;
-  border-bottom: 2px solid lightgrey;
-}
-
-.lists-date {
-  font-weight: 800;
-  text-transform: uppercase;
-  font-size: 32px;
 }
 
 /* TODO LIST */
@@ -335,14 +325,13 @@ ol {
 }
 
 /***********************NEW***********************/
-.Settings {
+.SettingsNav {
   padding-top: 30px;
   padding-left: 20px;
   padding-right: 20px;
-  min-width: 250px;
-  max-width: 350px;
+  flex: 1;
   border-right: 1px solid lightgray;
-  height: 100vw;
+  min-height: 100%;
 }
 
 .ProfilePhoto {
@@ -377,25 +366,25 @@ ol {
   text-transform: uppercase;
 }
 
-.SettingsList-section {
+.SettingsNavList-section {
   margin-bottom: 20px;
 }
-.SettingsList-sectionTitle {
+.SettingsNavList-sectionTitle {
   font-weight: 800;
   font-size: 14px;
   text-transform: uppercase;
   margin-bottom: 10px;
 }
-.SettingsList-item {
+.SettingsNavList-item {
   display: flex;
   align-items: center;
   justify-content: space-between;
   margin-bottom: 10px;
 }
-.SettingsList-item:hover {
+.SettingsNavList-item:hover {
   cursor: pointer;
 }
-.SettingsList-item p {
+.SettingsNavList-item p {
   flex: 4;
   text-align: left;
   margin-left: 15px;
@@ -419,4 +408,48 @@ ol {
 .Button--cancel {
   background: none;
   color: #000;
+}
+
+.Settings-content {
+  display: flex;
+  height: 90%;
+}
+
+.SettingsContent {
+  padding: 40px;
+  flex: 3;
+}
+
+.HabitsSettings-listItem {
+  list-style-type: none;
+  font-size: 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 500px;
+  margin-bottom: 20px;
+}
+.HabitsSettings-listItem:last-of-type {
+  margin-bottom: 40px;
+}
+.HabitsSettings-listItem:hover {
+  cursor: pointer;
+}
+
+.HabitsSettingsItem {
+  flex: 1;
+}
+
+.Header {
+  padding: 10px 20px;
+  height: 10%;
+  border-bottom: 2px solid lightgrey;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.Header-date {
+  font-weight: 800;
+  text-transform: uppercase;
+  font-size: 32px;
 }/*# sourceMappingURL=index.css.map */

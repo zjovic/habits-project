@@ -18,8 +18,8 @@ export const Header = () => {
   }, []);
 
   return (
-    <div className="lists-header">
-      <span className="lists-date">{date}</span>
+    <div className="Header">
+      <span className="Header-date">{date}</span>
       <Message />
     </div>
   );

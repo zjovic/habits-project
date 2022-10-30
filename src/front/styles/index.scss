@@ -135,59 +135,60 @@ ol {
 }
 
 /* FORM */
-.habitsForm-title {
-  text-transform: uppercase;
-  font-weight: 800;
-  margin-bottom: 30px;
-}
-
 .habitsForm {
   display: flex;
   flex-direction: column;
   width: 300px;
-}
 
-.habitsForm-fieldset {
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 30px;
-}
+  &-title {
+    text-transform: uppercase;
+    font-weight: 800;
+    margin-bottom: 30px;
+  }
 
-.habitsForm-label {
-  font-weight: bold;
-  text-transform: uppercase;
-  margin-bottom: 5px;
-}
+  &-fieldset {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 30px;
+  }
 
-.habitsForm-input,
-.habitsForm-input:focus,
-.habitsForm-input:focus-visible {
-  border: 2px solid #000;
-  border-radius: 0;
-  padding: 15px 20px;
-  outline: 0;
-}
+  &-legend {
+    text-transform: uppercase;
+    font-weight: 800;
+    font-size: 16px;
+  }
 
-.habitsForm-error {
-  color: red;
-  margin-bottom: 30px;
+  &-label {
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+  }
+
+  &-input,
+  &-input:focus,
+  &-input:focus-visible {
+    border: 2px solid #000;
+    border-radius: 0;
+    padding: 15px 20px;
+    outline: 0;
+  }
+
+  &-input {
+    &[type="radio"] {
+      margin: 0 10px;
+    }
+  }
+
+  &-error {
+    color: red;
+    margin-bottom: 30px;
+  }
 }
 
 /* LISTS */
 .lists-container {
   height: 100vh;
   width: 100vw;
-}
-
-.lists-header {
-  padding: 20px;
-  border-bottom: 2px solid lightgrey;
-}
-
-.lists-date {
-  font-weight: 800;
-  text-transform: uppercase;
-  font-size: 32px;
 }
 
 /* TODO LIST */
@@ -335,14 +336,13 @@ ol {
 }
 
 /***********************NEW***********************/
-.Settings {
+.SettingsNav {
   padding-top: 30px;
   padding-left: 20px;
   padding-right: 20px;
-  min-width: 250px;
-  max-width: 350px;
+  flex: 1;
   border-right: 1px solid lightgray;
-  height: 100vw;
+  min-height: 100%;
 }
 
 .ProfilePhoto {
@@ -380,7 +380,7 @@ ol {
   }
 }
 
-.SettingsList {
+.SettingsNavList {
   &-section {
     margin-bottom: 20px;
   }
@@ -431,5 +431,60 @@ ol {
   &--cancel {
     background: none;
     color: #000;
+  }
+}
+
+// SETTINGS LAYOUT
+.Settings {
+  &-content {
+    display: flex;
+    height: 90%;
+  }
+}
+
+// SETTINGS CONTENT
+.SettingsContent {
+  padding: 40px;
+  flex: 3;
+}
+
+// SETTINGS HABITS
+.HabitsSettings {
+  &-listItem {
+    list-style-type: none;
+    font-size: 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 500px;
+    margin-bottom: 20px;
+
+    &:last-of-type {
+      margin-bottom: 40px;
+    }
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
+
+.HabitsSettingsItem {
+  flex: 1;
+}
+
+// HEADER
+.Header {
+  padding: 10px 20px;
+  height: 10%;
+  border-bottom: 2px solid lightgrey;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  &-date {
+    font-weight: 800;
+    text-transform: uppercase;
+    font-size: 32px;
   }
 }

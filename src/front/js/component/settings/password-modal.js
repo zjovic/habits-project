@@ -2,8 +2,6 @@ import React, { useState, useEffect, useContext } from "react";
 import { Context } from "../../store/appContext";
 import { useNavigate } from "react-router-dom";
 
-const passwordModal = document.getElementById("passwordModal");
-
 export const PasswordModal = () => {
   const { store, actions } = useContext(Context);
 

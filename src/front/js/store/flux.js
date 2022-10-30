@@ -224,6 +224,35 @@ const getState = ({ getStore, getActions, setStore }) => {
         }
       },
 
+      addHabit: async ({ habitName, type, repetitions }) => {
+        try {
+          const options = {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+              "Content-type": "application/json",
+            },
+            body: JSON.stringify({
+              name: habitName,
+              type: type,
+              num_of_repetitions: repetitions,
+            }),
+          };
+
+          const response = await fetch(`${process.env.API_URL}/habit`, options);
+
+          if (response.status === 200) {
+            const data = await response.json();
+            const store = getStore();
+            const currHabits = [...store.habits, data];
+
+            setStore({ habits: currHabits });
+          }
+        } catch (error) {
+          console.log("error", error);
+        }
+      },
+
       editHabit: async ({ id, habitName, type, repetitions, repeated }) => {
         try {
           const options = {
