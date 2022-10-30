@@ -13,7 +13,7 @@ from api.admin import setup_admin
 from api.commands import setup_commands
 from flask_jwt_extended import JWTManager
 from flask_apscheduler import APScheduler
-from api.models import User, Setting, Todo
+from api.models import User, Setting, Todo, Habit, Statistic
 from datetime import datetime
 
 
@@ -98,8 +98,34 @@ def scheduledTask():
 
                 for todo in todos_to_delete:
                     db.session.delete(todo)
-                    db.session.commit() 
+                    db.session.commit()
 
-scheduler.add_job(id = "Scheduled task", func = scheduledTask, trigger = "interval", seconds = 3600)
+# disable habit editing after day end, store data, reset repetitions
+
+def scheduledTaskTwo():
+    with app.app_context():
+        users = User.query.all()
+
+        print('Scheduled task two')
+
+        current_time_string = datetime.now().strftime("%H:%M:%S")
+        current_time = datetime.strptime(current_time_string,"%H:%M:%S")
+
+        for user in users:
+            settings = Setting.query.filter_by(user_id = user.id).first()
+            user_set_time_string = settings.day_end.strftime("%H:%M:%S")
+            user_set_time = datetime.strptime(user_set_time_string,"%H:%M:%S")
+
+            if (current_time > user_set_time):
+                habits = Habit.query.filter_by(user_id = user.id).all()
+
+                for habit in habits:
+                    record = Statistic(habit_id = habit.id, reps = habit.num_times_repeated)
+
+                    db.session.add(record)
+                    db.session.commit()
+
+# scheduler.add_job(id = "Scheduled task", func = scheduledTask, trigger = "interval", seconds = 3600)
+# scheduler.add_job(id = "Scheduled task two", func = scheduledTaskTwo, trigger = "interval", seconds = 60)
 scheduler.start()
 app.run(host="0.0.0.0", port = 8080)

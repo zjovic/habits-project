@@ -11,23 +11,25 @@ export const HabitsItem = ({ habit }) => {
   const [repetitions, setRepetitions] = useState(habit.num_of_repetitions);
   const [repeated, setRepeated] = useState(habit.num_times_repeated);
 
-  const handleHabitUpdate = (num) => {
-    setRepeated(num);
+  useEffect(() => {
+    const updateHabit = async () => {
+      actions.editHabit({
+        id: habit.id,
+        habitName: habitName,
+        type: type,
+        repetitions: repetitions,
+        repeated: repeated,
+      });
+    };
 
-    actions.editHabit({
-      id: habit.id,
-      habitName: habitName,
-      type: type,
-      repetitions: repetitions,
-      repeated: repeated,
-    });
-  };
+    updateHabit();
+  }, [repeated]);
 
   return (
     <li className="habits-list-item" key={habit.id}>
       <button
         className="habit-action"
-        onClick={() => handleHabitUpdate(repeated - 1)}
+        onClick={() => setRepeated(repeated - 1)}
       >
         -
       </button>
@@ -41,7 +43,7 @@ export const HabitsItem = ({ habit }) => {
       </div>
       <button
         className="habit-action"
-        onClick={() => handleHabitUpdate(repeated + 1)}
+        onClick={() => setRepeated(repeated + 1)}
       >
         +
       </button>

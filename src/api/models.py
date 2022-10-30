@@ -75,7 +75,7 @@ class Habit(db.Model):
     num_of_repetitions = db.Column(db.Integer, unique=False, nullable=False)
     num_times_repeated = db.Column(db.Integer, unique=False, nullable=False, default=0)
 
-    habit = relationship('HabitNumberOfRepetitions', backref='habit')
+    habit = relationship('Statistic', backref='habit')
 
     def __repr__(self):
         return f'<Habit {self.id}>'
@@ -90,7 +90,7 @@ class Habit(db.Model):
             'num_times_repeated': self.num_times_repeated,
         }
 
-class HabitNumberOfRepetitions(db.Model):
+class Statistic(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     habit_id = db.Column(db.Integer,db.ForeignKey('habit.id'))
     reps = db.Column(db.Integer, unique=False, nullable=False)
@@ -98,7 +98,7 @@ class HabitNumberOfRepetitions(db.Model):
 
 
     def __repr__(self):
-        return f'<HabitNumberOfRepetitions {self.id}>'
+        return f'<Statistic {self.id}>'
 
     def serialize(self):
         return {

@@ -35,21 +35,25 @@ export const Todos = () => {
     <div>
       <Header />
       <Tabs />
-      <ul className="todos-list">
-        {store.todos.map((todo) => {
-          return (
-            <li
-              className={`todos-list-item ${
-                todo.state === ITEM_DONE ? "finished" : ""
-              }`}
-              key={todo.id}
-              onClick={() => handleItemClick(todo.id)}
-            >
-              {todo.name}
-            </li>
-          );
-        })}
-      </ul>
+      {!store.loading ? (
+        <ul className="todos-list">
+          {store.todos.map((todo) => {
+            return (
+              <li
+                className={`todos-list-item ${
+                  todo.state === ITEM_DONE ? "finished" : ""
+                }`}
+                key={todo.id}
+                onClick={() => handleItemClick(todo.id)}
+              >
+                {todo.name}
+              </li>
+            );
+          })}
+        </ul>
+      ) : (
+        ""
+      )}
       <AddTodo />
     </div>
   );

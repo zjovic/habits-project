@@ -23,6 +23,7 @@ export const Habits = () => {
     }
   }, []);
   // accomodate for empty state
+  // finish day button
   return (
     <div>
       <Header />

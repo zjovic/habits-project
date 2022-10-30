@@ -2,7 +2,7 @@
 import json
 from flask import Flask, request, jsonify, url_for, Blueprint
 import werkzeug
-from api.models import db, User, Todo, Habit, Setting, HabitNumberOfRepetitions
+from api.models import db, User, Todo, Habit, Setting, Statistic
 from api.utils import generate_sitemap, APIException
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_jwt_extended import create_access_token
@@ -350,3 +350,4 @@ def edit_name():
     db.session.commit()
 
     return jsonify(user.serialize()), 200
+
