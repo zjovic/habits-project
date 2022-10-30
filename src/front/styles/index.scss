@@ -191,29 +191,6 @@ ol {
   width: 100vw;
 }
 
-/* TODO LIST */
-.todos-list {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
-.todos-list-item {
-  margin: 20px;
-  font-size: 24px;
-  list-style-type: none;
-}
-
-.todos-list-item:hover {
-  cursor: pointer;
-}
-
-.todos-list-item.finished {
-  text-decoration: line-through;
-  color: lightgray;
-}
-
 /* LISTS TABS */
 .list-tabs {
   display: flex;
@@ -486,5 +463,35 @@ ol {
     font-weight: 800;
     text-transform: uppercase;
     font-size: 32px;
+  }
+}
+
+/* TODOS */
+.TodosList {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  &-item {
+    margin: 20px;
+    font-size: 24px;
+    list-style-type: none;
+    display: flex;
+    align-items: center;
+
+    &:hover {
+      cursor: pointer;
+    }
+
+    &.settings {
+      justify-content: space-between;
+      width: 80%;
+    }
+
+    &.finished {
+      text-decoration: line-through;
+      color: lightgray;
+    }
   }
 }

@@ -120,6 +120,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 
           const response = await fetch(`${process.env.API_URL}/todo`, options);
 
+          if (response.status === 401) {
+            getActions().logout();
+          }
+
           if (response.status === 200) {
             const data = await response.json();
             const store = getStore();
@@ -145,6 +149,10 @@ const getState = ({ getStore, getActions, setStore }) => {
             `${process.env.API_URL}/todo/${id}`,
             options
           );
+
+          if (response.status === 401) {
+            getActions().logout();
+          }
 
           if (response.status === 200) {
             const data = await response.json();
@@ -176,6 +184,10 @@ const getState = ({ getStore, getActions, setStore }) => {
             `${process.env.API_URL}/todo/${id}`,
             options
           );
+
+          if (response.status === 401) {
+            getActions().logout();
+          }
 
           if (response.status === 200) {
             const data = await response.json();
@@ -241,6 +253,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 
           const response = await fetch(`${process.env.API_URL}/habit`, options);
 
+          if (response.status === 401) {
+            getActions().logout();
+          }
+
           if (response.status === 200) {
             const data = await response.json();
             const store = getStore();
@@ -305,6 +321,11 @@ const getState = ({ getStore, getActions, setStore }) => {
             },
           };
           const response = await fetch(`${process.env.API_URL}/user`, options);
+
+          if (response.status === 401) {
+            getActions().logout();
+          }
+
           const data = await response.json();
           const userSettings = data.user;
 

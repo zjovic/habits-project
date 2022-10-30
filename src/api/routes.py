@@ -350,4 +350,3 @@ def edit_name():
     db.session.commit()
 
     return jsonify(user.serialize()), 200
-

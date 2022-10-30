@@ -54,6 +54,10 @@ app.register_blueprint(api, url_prefix='/api')
 def handle_invalid_usage(error):
     return jsonify(error.to_dict()), error.status_code
 
+@app.errorhandler(401)
+def custom_401(error):
+    return jsonify({'message': 'Session expired'}), 401
+
 # generate sitemap with all your endpoints
 @app.route('/')
 def sitemap():
