@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
-import { RepeatIcon } from "./repeat-icon";
+import { RepeatIcon } from "./icons";
 
 export const Progress = ({ num, max }) => {
   const progress = {

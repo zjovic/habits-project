@@ -1,38 +1,39 @@
 import React, { useState, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
 import { Context } from "../store/appContext";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useMatch, useNavigate } from "react-router-dom";
 
-export const Tabs = ({ handleTabToggle }) => {
+export const Tabs = () => {
   const { store, actions } = useContext(Context);
   const params = useParams();
 
-  const [activeTab, setActiveTab] = useState("todos");
+  const isTodosRoute = useMatch("/todos");
+  const isHabitsRoute = useMatch("/habits");
+
+  const [activeTab, setActiveTab] = useState(isTodosRoute ? "todos" : "habits");
 
   return (
     <div className="list-tabs">
-      <span
-        className={`list-tab ${activeTab === "todos" ? "active" : ""}`}
-        onClick={(event) => {
-          handleTabToggle("todos");
-          setActiveTab("todos");
-        }}
-      >
-        todos
-      </span>
-      <span
-        className={`list-tab ${activeTab === "habits" ? "active" : ""}`}
-        onClick={(event) => {
-          handleTabToggle("habits");
-          setActiveTab("habits");
-        }}
-      >
-        habits
-      </span>
+      <Link to="/todos">
+        <span
+          className={`list-tab ${activeTab === "todos" ? "active" : ""}`}
+          onClick={() => {
+            setActiveTab("todos");
+          }}
+        >
+          todos
+        </span>
+      </Link>
+      <Link to="/habits">
+        <span
+          className={`list-tab ${activeTab === "habits" ? "active" : ""}`}
+          onClick={() => {
+            setActiveTab("habits");
+          }}
+        >
+          habits
+        </span>
+      </Link>
     </div>
   );
-};
-
-Tabs.propTypes = {
-  handleTabToggle: PropTypes.func,
 };

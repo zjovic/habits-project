@@ -1,11 +1,10 @@
-const apiURL = "http://localhost:3001/api";
-
 const getState = ({ getStore, getActions, setStore }) => {
   return {
     store: {
       token: null,
       todos: [],
       habits: [],
+      userSettings: {},
       messages: [
         "Either you run the day or the day runs you.",
         "Setting goals is the first step in turning the invisible into the visible.",
@@ -13,8 +12,13 @@ const getState = ({ getStore, getActions, setStore }) => {
         "Good habits are worth being fanatical about.",
         "Habits change into character.",
       ],
+      loading: false,
     },
     actions: {
+      setLoading: (bool) => {
+        setStore({ loading: bool });
+      },
+
       registerUser: async ({ email, password, name }) => {
         try {
           const options = {
@@ -28,10 +32,8 @@ const getState = ({ getStore, getActions, setStore }) => {
               name: name,
             }),
           };
-          const response = await fetch(`${apiURL}/register`, options);
-          if (response.status === 200) {
-            setshowSuccessScreen(true);
-          }
+
+          await fetch(`${process.env.API_URL}/register`, options);
         } catch (error) {
           console.log("error", error);
         }
@@ -50,7 +52,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             }),
           };
 
-          const response = await fetch(`${apiURL}/login`, options);
+          const response = await fetch(`${process.env.API_URL}/login`, options);
 
           if (response.status === 200) {
             const data = await response.json();
@@ -87,7 +89,7 @@ const getState = ({ getStore, getActions, setStore }) => {
               Authorization: `Bearer ${sessionStorage.getItem("token")}`,
             },
           };
-          const response = await fetch(`${apiURL}/todos`, options);
+          const response = await fetch(`${process.env.API_URL}/todos`, options);
 
           if (response.status === 401) {
             getActions().logout();
@@ -116,12 +118,16 @@ const getState = ({ getStore, getActions, setStore }) => {
             }),
           };
 
-          const response = await fetch(`${apiURL}/todo`, options);
+          const response = await fetch(`${process.env.API_URL}/todo`, options);
+
+          if (response.status === 401) {
+            getActions().logout();
+          }
 
           if (response.status === 200) {
             const data = await response.json();
             const store = getStore();
-            const currTodos = data.todos;
+            const currTodos = [...store.todos, data];
 
             setStore({ todos: currTodos });
           }
@@ -139,7 +145,14 @@ const getState = ({ getStore, getActions, setStore }) => {
             },
           };
 
-          const response = await fetch(`${apiURL}/todo/${id}`, options);
+          const response = await fetch(
+            `${process.env.API_URL}/todo/${id}`,
+            options
+          );
+
+          if (response.status === 401) {
+            getActions().logout();
+          }
 
           if (response.status === 200) {
             const data = await response.json();
@@ -167,7 +180,14 @@ const getState = ({ getStore, getActions, setStore }) => {
             },
           };
 
-          const response = await fetch(`${apiURL}/todo/${id}`, options);
+          const response = await fetch(
+            `${process.env.API_URL}/todo/${id}`,
+            options
+          );
+
+          if (response.status === 401) {
+            getActions().logout();
+          }
 
           if (response.status === 200) {
             const data = await response.json();
@@ -198,16 +218,17 @@ const getState = ({ getStore, getActions, setStore }) => {
               Authorization: `Bearer ${sessionStorage.getItem("token")}`,
             },
           };
-          const response = await fetch(`${apiURL}/habits`, options);
+          const response = await fetch(
+            `${process.env.API_URL}/habits`,
+            options
+          );
 
           if (response.status === 401) {
             getActions().logout();
           }
 
           const data = await response.json();
-
-          const store = getStore();
-          const currHabits = [...store.habits, ...data.habits];
+          const currHabits = data.habits;
 
           setStore({ habits: currHabits });
         } catch (error) {
@@ -215,135 +236,206 @@ const getState = ({ getStore, getActions, setStore }) => {
         }
       },
 
-      // fetch of the new habit
-      registerNewHabit: async ({ newhabits, timesaday, typeofhabit }) => {
+      addHabit: async ({ habitName, type, repetitions }) => {
         try {
           const options = {
             method: "POST",
             headers: {
+              Authorization: `Bearer ${sessionStorage.getItem("token")}`,
               "Content-type": "application/json",
             },
             body: JSON.stringify({
-              new_habit: newhabits,
-              num_of_repetitions: timesaday,
-              type: typeofhabit,
+              name: habitName,
+              type: type,
+              num_of_repetitions: repetitions,
             }),
           };
-          const response = await fetch(`${apiURL}/habit`, options);
+
+          const response = await fetch(`${process.env.API_URL}/habit`, options);
+
+          if (response.status === 401) {
+            getActions().logout();
+          }
+
           if (response.status === 200) {
-            setshowSuccessScreen(true);
+            const data = await response.json();
+            const store = getStore();
+            const currHabits = [...store.habits, data];
+
+            setStore({ habits: currHabits });
           }
         } catch (error) {
           console.log("error", error);
         }
       },
 
-      
-        registerNameOfTheUser: async ({ userName }) => {
-          try {
-            const options = {
-              method: "PUT",
-              headers: {
-                "Content-type": "application/json",
-              },
-              body: JSON.stringify({
-                userName: userName,
-              }),
-            };
-            const response = await fetch(`${apiURL}/user`, options);
-            if (response.status === 200) {
-              setshowSuccessScreen(true);
-            }
-          } catch (error) {
-            console.log("error", error);
-          }
-        },
-
-        changePassWord: async ({ password, newPassword }) => {
-          try {
-            const options = {
-              method: "PUT",
-              headers: {
-                "Content-type": "application/json",
-              },
-              body: JSON.stringify({
-                password: password,
-                newPassword: newPassword,
-              }),
-            };
-            const response = await fetch(`${apiURL}/register`, options);
-            if (response.status === 200) {
-              setshowSuccessScreen(true);
-            }
-          } catch (error) {
-            console.log("error", error);
-          }
-        },
-
-        // fetch of the  Name of the User
-        registerNameOfTheUser: async ({ userName }) => {
-          try {
-            const options = {
+      editHabit: async ({ id, habitName, type, repetitions, repeated }) => {
+        try {
+          const options = {
             method: "PUT",
             headers: {
+              Authorization: `Bearer ${sessionStorage.getItem("token")}`,
               "Content-type": "application/json",
             },
             body: JSON.stringify({
-              userName: userName,
+              name: habitName,
+              type: type,
+              num_of_repetitions: repetitions,
+              num_times_repeated: repeated,
             }),
-            };
-            const response = await fetch(`${apiURL}/user`, options);
-            if (response.status === 200) {
-            setshowSuccessScreen(true);
-            }
-          } catch (error) {
-            console.log("error", error);
+          };
+          const response = await fetch(
+            `${process.env.API_URL}/habit/${id}`,
+            options
+          );
+
+          if (response.status === 401) {
+            getActions().logout();
           }
-          },
-  
-          // fetch of the  theme/mode
-          registerModeOfTheUser: async ({ typeofmode }) => {
-          try {
-            const options = {
+
+          const data = await response.json();
+          const editedHabitId = data.id;
+
+          const store = getStore();
+
+          const updatedHabit = store.habits.map((habit) => {
+            if (habit.id === editedHabitId) {
+              return { ...data };
+            }
+
+            return habit;
+          });
+
+          setStore({ habits: updatedHabit });
+        } catch (error) {
+          console.log("Error loading habits from backend", error);
+        }
+      },
+
+      fetchUser: async () => {
+        try {
+          const options = {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+            },
+          };
+          const response = await fetch(`${process.env.API_URL}/user`, options);
+
+          if (response.status === 401) {
+            getActions().logout();
+          }
+
+          const data = await response.json();
+          const userSettings = data.user;
+
+          setStore({ userSettings: userSettings });
+        } catch (error) {
+          console.log("Error loading todos from backend", error);
+        }
+      },
+
+      editName: async ({ name }) => {
+        try {
+          const options = {
             method: "PUT",
             headers: {
+              Authorization: `Bearer ${sessionStorage.getItem("token")}`,
               "Content-type": "application/json",
             },
             body: JSON.stringify({
-              mode: typeofmode,
+              name: name,
             }),
-            };
-            const response = await fetch(`${apiURL}/settings`, options);
-            if (response.status === 200) {
-            setshowSuccessScreen(true);
-            }
-          } catch (error) {
-            console.log("error", error);
+          };
+          const response = await fetch(
+            `${process.env.API_URL}/user/name`,
+            options
+          );
+
+          if (response.status === 401) {
+            getActions().logout();
           }
-          },
-      
-          // fetch of the change pass
-          changePassWord: async ({ newPassword }) => {
-          try {
-            const options = {
+
+          const data = await response.json();
+          const store = getStore();
+
+          const updatedUserSettings = {
+            ...store.userSettings,
+            name: data.name,
+          };
+
+          setStore({ userSettings: updatedUserSettings });
+        } catch (error) {
+          console.log("Edit name error", error);
+        }
+      },
+
+      editSettings: async ({ mode, lang, dayStartTime, dayEndTime }) => {
+        try {
+          const options = {
             method: "PUT",
             headers: {
+              Authorization: `Bearer ${sessionStorage.getItem("token")}`,
               "Content-type": "application/json",
             },
             body: JSON.stringify({
-              password: newPassword,
+              mode: mode,
+              lang: lang,
+              day_start: dayStartTime,
+              day_end: dayEndTime,
             }),
-            };
-            const response = await fetch(`${apiURL}/password`, options);
-            if (response.status === 200) {
-            setshowSuccessScreen(true);
-            }
-          } catch (error) {
-            console.log("error", error);
+          };
+          const response = await fetch(
+            `${process.env.API_URL}/settings`,
+            options
+          );
+
+          if (response.status === 401) {
+            getActions().logout();
           }
-          },
 
+          const data = await response.json();
+          const store = getStore();
 
+          const updatedUserSettings = {
+            ...store.userSettings,
+            mode: data.mode,
+            lang: data.lang,
+            day_start: data.day_start,
+            day_end: data.day_end,
+          };
+
+          setStore({ userSettings: updatedUserSettings });
+        } catch (error) {
+          console.log("Error loading habits from backend", error);
+        }
+      },
+
+      changePassword: async ({ currentPassword, newPassword }) => {
+        try {
+          const options = {
+            method: "PUT",
+            headers: {
+              Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+              "Content-type": "application/json",
+            },
+            body: JSON.stringify({
+              current_password: currentPassword,
+              new_password: newPassword,
+            }),
+          };
+          const response = await fetch(
+            `${process.env.API_URL}/password`,
+            options
+          );
+
+          if (response.status === 401) {
+            getActions().logout();
+          }
+        } catch (error) {
+          console.log("Edit name error", error);
+        }
+      },
     },
   };
 };

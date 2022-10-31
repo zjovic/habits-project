@@ -25,7 +25,7 @@ export const Login = () => {
       password: password,
     });
 
-    return navigate("/lists");
+    return navigate("/todos");
   };
 
   return (

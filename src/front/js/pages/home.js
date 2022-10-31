@@ -12,7 +12,7 @@ export const Home = () => {
   useEffect(() => {
     const checkToken = () => {
       if (token && token !== undefined && token !== "") {
-        return navigate("/lists");
+        return navigate("/todos");
       }
     };
     checkToken();
@@ -21,14 +21,6 @@ export const Home = () => {
   return (
     <div className="home-container">
       <img src={homeBg} className="home-bg" />
-      <div className="home-actions">
-        <Link to="/login">
-          <button className="home-action home-action--light">Login</button>
-        </Link>
-        <Link to="/register">
-          <button className="home-action home-action--dark">Register</button>
-        </Link>
-      </div>
     </div>
   );
 };

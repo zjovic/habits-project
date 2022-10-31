@@ -32,6 +32,7 @@ ol {
 }
 
 /* STYLES */
+
 /* HOME */
 .home-container {
   height: 100vh;
@@ -40,8 +41,7 @@ ol {
 }
 
 .home-bg {
-  -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
   width: 100vw;
   height: 100vh;
 }
@@ -139,39 +139,50 @@ ol {
   display: flex;
   flex-direction: column;
   width: 300px;
-}
-.habitsForm-title {
-  text-transform: uppercase;
-  font-weight: 800;
-  margin-bottom: 30px;
-}
-.habitsForm-fieldset {
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 30px;
-}
-.habitsForm-legend {
-  text-transform: uppercase;
-  font-weight: 800;
-  font-size: 16px;
-}
-.habitsForm-label {
-  font-weight: bold;
-  text-transform: uppercase;
-  margin-bottom: 5px;
-}
-.habitsForm-input, .habitsForm-input:focus, .habitsForm-input:focus-visible {
-  border: 2px solid #000;
-  border-radius: 0;
-  padding: 15px 20px;
-  outline: 0;
-}
-.habitsForm-input[type=radio] {
-  margin: 0 10px;
-}
-.habitsForm-error {
-  color: red;
-  margin-bottom: 30px;
+
+  &-title {
+    text-transform: uppercase;
+    font-weight: 800;
+    margin-bottom: 30px;
+  }
+
+  &-fieldset {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 30px;
+  }
+
+  &-legend {
+    text-transform: uppercase;
+    font-weight: 800;
+    font-size: 16px;
+  }
+
+  &-label {
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+  }
+
+  &-input,
+  &-input:focus,
+  &-input:focus-visible {
+    border: 2px solid #000;
+    border-radius: 0;
+    padding: 15px 20px;
+    outline: 0;
+  }
+
+  &-input {
+    &[type="radio"] {
+      margin: 0 10px;
+    }
+  }
+
+  &-error {
+    color: red;
+    margin-bottom: 30px;
+  }
 }
 
 /* LISTS */
@@ -317,106 +328,129 @@ ol {
   justify-content: center;
   align-items: center;
   flex-direction: column;
-}
-.ProfilePhoto-imgWrap {
-  height: 90px;
-  width: 90px;
-  border: 2px solid #000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 15px;
-}
-.ProfilePhoto-img {
-  background-color: lightgray;
-  height: 96%;
-  width: 96%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #000;
-  font-size: 32px;
-  font-weight: 800;
-}
-.ProfilePhoto h3 {
-  font-weight: 800;
-  text-transform: uppercase;
+
+  &-imgWrap {
+    height: 90px;
+    width: 90px;
+    border: 2px solid #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 15px;
+  }
+
+  &-img {
+    background-color: lightgray;
+    height: 96%;
+    width: 96%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #000;
+    font-size: 32px;
+    font-weight: 800;
+  }
+
+  h3 {
+    font-weight: 800;
+    text-transform: uppercase;
+  }
 }
 
-.SettingsNavList-section {
-  margin-bottom: 20px;
-}
-.SettingsNavList-sectionTitle {
-  font-weight: 800;
-  font-size: 14px;
-  text-transform: uppercase;
-  margin-bottom: 10px;
-}
-.SettingsNavList-item {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 10px;
-}
-.SettingsNavList-item:hover {
-  cursor: pointer;
-}
-.SettingsNavList-item p {
-  flex: 4;
-  text-align: left;
-  margin-left: 15px;
+.SettingsNavList {
+  &-section {
+    margin-bottom: 20px;
+  }
+
+  &-sectionTitle {
+    font-weight: 800;
+    font-size: 14px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  &-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+
+    &:hover {
+      cursor: pointer;
+    }
+
+    p {
+      flex: 4;
+      text-align: left;
+      margin-left: 15px;
+    }
+  }
 }
 
+// BOOTSTRAP MODAL OVERRIDE
 .modal-footer {
   border-top: none;
 }
 
+// BUTTONS
 .Button {
   border: 2px solid #000;
   text-align: center;
   text-transform: uppercase;
   padding: 15px 30px;
   font-weight: bold;
-}
-.Button--confirm {
-  background: #000;
-  color: #fff;
-}
-.Button--cancel {
-  background: none;
-  color: #000;
+
+  &--confirm {
+    background: #000;
+    color: #fff;
+  }
+
+  &--cancel {
+    background: none;
+    color: #000;
+  }
 }
 
-.Settings-content {
-  display: flex;
-  height: 90%;
+// SETTINGS LAYOUT
+.Settings {
+  &-content {
+    display: flex;
+    height: 90%;
+  }
 }
 
+// SETTINGS CONTENT
 .SettingsContent {
   padding: 40px;
   flex: 3;
 }
 
-.HabitsSettings-listItem {
-  list-style-type: none;
-  font-size: 24px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  max-width: 500px;
-  margin-bottom: 20px;
-}
-.HabitsSettings-listItem:last-of-type {
-  margin-bottom: 40px;
-}
-.HabitsSettings-listItem:hover {
-  cursor: pointer;
+// SETTINGS HABITS
+.HabitsSettings {
+  &-listItem {
+    list-style-type: none;
+    font-size: 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 500px;
+    margin-bottom: 20px;
+
+    &:last-of-type {
+      margin-bottom: 40px;
+    }
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
 }
 
 .HabitsSettingsItem {
   flex: 1;
 }
 
+// HEADER
 .Header {
   padding: 10px 20px;
   height: 10%;
@@ -424,11 +458,12 @@ ol {
   display: flex;
   flex-direction: column;
   justify-content: center;
-}
-.Header-date {
-  font-weight: 800;
-  text-transform: uppercase;
-  font-size: 32px;
+
+  &-date {
+    font-weight: 800;
+    text-transform: uppercase;
+    font-size: 32px;
+  }
 }
 
 /* TODOS */
@@ -437,22 +472,26 @@ ol {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+
+  &-item {
+    margin: 20px;
+    font-size: 24px;
+    list-style-type: none;
+    display: flex;
+    align-items: center;
+
+    &:hover {
+      cursor: pointer;
+    }
+
+    &.settings {
+      justify-content: space-between;
+      width: 80%;
+    }
+
+    &.finished {
+      text-decoration: line-through;
+      color: lightgray;
+    }
+  }
 }
-.TodosList-item {
-  margin: 20px;
-  font-size: 24px;
-  list-style-type: none;
-  display: flex;
-  align-items: center;
-}
-.TodosList-item:hover {
-  cursor: pointer;
-}
-.TodosList-item.settings {
-  justify-content: space-between;
-  width: 80%;
-}
-.TodosList-item.finished {
-  text-decoration: line-through;
-  color: lightgray;
-}/*# sourceMappingURL=index.css.map */

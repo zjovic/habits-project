@@ -2,7 +2,7 @@
 import json
 from flask import Flask, request, jsonify, url_for, Blueprint
 import werkzeug
-from api.models import db, User, Todo, Habit, Setting, HabitNumberOfRepetitions
+from api.models import db, User, Todo, Habit, Setting, Statistic
 from api.utils import generate_sitemap, APIException
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_jwt_extended import create_access_token
@@ -55,20 +55,26 @@ def login():
     return jsonify({'Message': 'Could not verify!'}), 401
 
 # GET USER
-@api.route('/user/<user_id>', methods=['GET'])
+@api.route('/user', methods=['GET'])
 @jwt_required()
-def get_user(user_id):
-    user = User.query.filter_by(id = user_id).first()
+def get_user():
+    user_email = get_jwt_identity()
+    user = User.query.filter_by(email = user_email).first()
 
     if not user:
         return jsonify({'message': 'No user found!'})
+
+    settings = Setting.query.filter_by(user_id = user.id).first()
 
     user_data = {}
     user_data['id'] = user.id
     user_data['email'] = user.email
     user_data['name'] = user.name
-    user_data['password'] = user.password
     user_data['admin'] = user.admin
+    user_data['mode'] = settings.mode
+    user_data['lang'] = settings.lang
+    user_data['day_start'] = settings.day_start.strftime("%H:%M:%S")
+    user_data['day_end'] = settings.day_end.strftime("%H:%M:%S")
 
     return jsonify({'user': user_data})
 
@@ -85,7 +91,6 @@ def get_users():
         user_data['id'] = user.id
         user_data['email'] = user.email
         user_data['name'] = user.name
-        user_data['password'] = user.password
         user_data['admin'] = user.admin
         output.append(user_data)
 
@@ -105,23 +110,8 @@ def add_todo():
 
     db.session.add(new_todo)
     db.session.commit()
-
-    user_email = get_jwt_identity()
-    user = User.query.filter_by(email = user_email).first()
-    todos = Todo.query.filter_by(user_id = user.id)
-
-    output = []
-
-    for todo in todos:
-        todo_data = {}
-        todo_data['id'] = todo.id
-        todo_data['name'] = todo.name
-        todo_data['created_at'] = todo.created_at
-        todo_data['state'] = todo.state
-        output.append(todo_data)
-
-    return jsonify({'todos': output})
-
+    
+    return jsonify(new_todo.serialize()), 200
 
 # GET TODO
 @api.route('/todo/<todo_id>', methods=['GET'])
@@ -205,7 +195,7 @@ def add_habit():
     db.session.add(new_habit)
     db.session.commit()
 
-    return jsonify({'message': 'New habit created'})
+    return jsonify(new_habit.serialize()), 200
 
 # GET HABITS
 @api.route('/habits', methods=['GET'])
@@ -333,9 +323,29 @@ def edit_password():
     if not user:
         return jsonify({'message': 'This user does not exist'}), 500
 
-    hashed_password = generate_password_hash(data['password'], method = 'sha256')
+    if not check_password_hash(user.password, data['current_password']):
+        return jsonify({'message': 'Wrong password!'}), 500
+
+    hashed_new_password = generate_password_hash(data['new_password'], method = 'sha256')
+
+    setattr(user, 'password', hashed_new_password)
     
-    setattr(user, 'password', hashed_password)
+    db.session.commit()
+
+    return jsonify({'message': 'Password changed'})
+
+# CHANGE NAME
+@api.route('/user/name', methods=['PUT'])
+@jwt_required()
+def edit_name():
+    data = request.get_json()
+    user_email = get_jwt_identity()
+    user = User.query.filter_by(email = user_email).first()
+
+    if not user:
+        return jsonify({'message': 'This user does not exist'}), 500
+    
+    setattr(user, 'name', data['name'])
     
     db.session.commit()
 
