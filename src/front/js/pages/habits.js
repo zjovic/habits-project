@@ -24,7 +24,7 @@ export const Habits = () => {
     }
   }, []);
 
-  if (!store.habits || store.habits.length === 0) {
+  if (!store?.habits || store?.habits?.length === 0) {
     return <p>Loading</p>;
   }
 

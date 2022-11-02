@@ -33,7 +33,9 @@ export const TodosList = () => {
     isSettingsRoute ? actions.deleteTodo(id) : actions.toggleTodo(id);
   };
 
-  if (!store.todos || store.todos.length === 0) {
+  console.log("store", store);
+
+  if (!store?.todos || store?.todos?.length === 0) {
     return <p>Loading</p>;
   }
 

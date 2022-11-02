@@ -121,6 +121,7 @@ def resetHabitsForTheDay():
             user_set_time = datetime.strptime(user_set_time_string,"%H:%M:%S")
 
             if (current_time > user_set_time):
+                print(1)
                 habits = Habit.query.filter_by(user_id = user.id).all()
 
                 for habit in habits:
@@ -149,6 +150,7 @@ def enableHabitsForTheDay():
             user_set_time = datetime.strptime(user_set_time_string,"%H:%M:%S")
 
             if (current_time > user_set_time):
+                print(2)
                 habits = Habit.query.filter_by(user_id = user.id).all()
 
                 for habit in habits:

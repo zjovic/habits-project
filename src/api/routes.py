@@ -388,3 +388,34 @@ def reset_habits():
         output.append(habit_data)
 
     return jsonify({'habits': output}), 200
+
+# GET HABITS STATS
+@api.route('/habits/stats', methods=['GET'])
+@jwt_required()
+def get_habits_stats():
+    user_email = get_jwt_identity()
+    user = User.query.filter_by(email = user_email).first()
+    habits = Habit.query.filter_by(user_id = user.id)
+
+    habitIds = []
+    for habit in habits:
+        habitIds.append(habit.id)
+
+    stats = db.session.query(Statistic).join(Habit).filter(Habit.id.in_(habitIds)).all()
+    # stats = db.session.query(Statistic).join(Habit).filter(Habit.id.in_(habitIds)).group_by(Statistic.created_at, Statistic.id).all()
+
+    # stats = db.session.query(Customer).join(Invoice).filter(Invoice.amount == 8500).all()
+    # stats = db.session.query(Statistic).join(Habit).filter(Statistic.habit_id == habit.id).all()
+
+    output = []
+
+    for stat in stats:
+        stat_data = {}
+        stat_data['id'] = stat.id
+        stat_data['habit_id'] = stat.habit_id
+        stat_data['reps'] = stat.reps
+        stat_data['created_at'] = datetime.strftime(stat.created_at,"%Y-%m-%d")
+        stat_data['type'] = stat.habit.type
+        output.append(stat_data)
+
+    return jsonify({'stats': output})
