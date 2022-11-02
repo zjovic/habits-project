@@ -436,6 +436,36 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.log("Edit name error", error);
         }
       },
+
+      finishDay: async () => {
+        try {
+          const options = {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+            },
+          };
+
+          const response = await fetch(
+            `${process.env.API_URL}/habits/reset`,
+            options
+          );
+
+          if (response.status === 401) {
+            getActions().logout();
+          }
+
+          if (response.status === 200) {
+            const data = await response.json();
+            const currHabits = data.habits;
+
+            setStore({ habits: [] });
+            setStore({ habits: currHabits });
+          }
+        } catch (error) {
+          console.log("error", error);
+        }
+      },
     },
   };
 };

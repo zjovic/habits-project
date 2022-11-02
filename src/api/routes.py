@@ -214,6 +214,7 @@ def get_habits():
         habit_data['type'] = habit.type
         habit_data['num_of_repetitions'] = habit.num_of_repetitions
         habit_data['num_times_repeated'] = habit.num_times_repeated
+        habit_data['editable'] = habit.editable
         output.append(habit_data)
 
     return jsonify({'habits': output})
@@ -233,6 +234,7 @@ def get_habit(habit_id):
     habit_data['type'] = habit.type
     habit_data['num_of_repetitions'] = habit.num_of_repetitions
     habit_data['num_times_repeated'] = habit.num_times_repeated
+    habit_data['editable'] = habit.editable
 
     return jsonify({'habit': habit_data})
 
@@ -350,3 +352,39 @@ def edit_name():
     db.session.commit()
 
     return jsonify(user.serialize()), 200
+
+# RESET HABITS FOR THE DAY
+@api.route('/habits/reset', methods=['POST'])
+@jwt_required()
+def reset_habits():
+    user_email = get_jwt_identity()
+    user = User.query.filter_by(email = user_email).first()
+
+    if not user:
+        return jsonify({'message': 'This user does not exist'}), 500
+
+    habits = Habit.query.filter_by(user_id = user.id)
+
+    output = []
+    
+    for habit in habits:
+        if (habit.editable == False):
+            return jsonify({'message': 'Day already finished'}), 500
+
+        recordStatistic = Statistic(habit_id = habit.id, reps = habit.num_times_repeated)
+        setattr(habit, 'num_times_repeated', 0)
+        setattr(habit, 'editable', False)
+
+        db.session.add(recordStatistic)
+        db.session.commit()
+
+        habit_data = {}
+        habit_data['id'] = habit.id
+        habit_data['name'] = habit.name
+        habit_data['type'] = habit.type
+        habit_data['num_of_repetitions'] = habit.num_of_repetitions
+        habit_data['num_times_repeated'] = habit.num_times_repeated
+        habit_data['editable'] = habit.editable
+        output.append(habit_data)
+
+    return jsonify({'habits': output}), 200

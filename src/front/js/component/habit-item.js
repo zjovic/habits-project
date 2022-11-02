@@ -10,40 +10,50 @@ export const HabitsItem = ({ habit }) => {
   const [type, setType] = useState(habit.type);
   const [repetitions, setRepetitions] = useState(habit.num_of_repetitions);
   const [repeated, setRepeated] = useState(habit.num_times_repeated);
+  const [isRepeatable, setIsRepeatable] = useState(
+    habit.num_of_repetitions > 0
+  );
 
   useEffect(() => {
-    const updateHabit = async () => {
-      actions.editHabit({
-        id: habit.id,
-        habitName: habitName,
-        type: type,
-        repetitions: repetitions,
-        repeated: repeated,
-      });
+    const updateRepeated = async () => {
+      try {
+        actions.setLoading(true);
+        await actions.editHabit({
+          id: habit.id,
+          habitName: habitName,
+          type: type,
+          repetitions: repetitions,
+          repeated: repeated,
+        });
+        actions.setLoading(false);
+      } catch (error) {
+        console.log("error", error);
+      }
     };
 
-    updateHabit();
+    updateRepeated();
   }, [repeated]);
 
   return (
-    <li className="habits-list-item" key={habit.id}>
+    <li className="HabitsListItem" key={habit.id}>
       <button
-        className="habit-action"
+        className={`HabitsListItem-action ${!isRepeatable ? "hidden" : ""} ${
+          habit.editable ? "" : "disabled"
+        }`}
         onClick={() => setRepeated(repeated - 1)}
+        disabled={!habit.editable}
       >
         -
       </button>
-      <div className="habit">
-        <p className="habit-name">{habitName}</p>
-        {habit.num_of_repetitions > 0 ? (
-          <Progress num={repeated} max={repetitions} />
-        ) : (
-          ""
-        )}
+
+      <div className="HabitsListItem-habit">
+        <p className="HabitsListItem-name">{habitName}</p>
+        {isRepeatable > 0 ? <Progress num={repeated} max={repetitions} /> : ""}
       </div>
       <button
-        className="habit-action"
+        className={`HabitsListItem-action ${!isRepeatable ? "hidden" : ""}`}
         onClick={() => setRepeated(repeated + 1)}
+        disabled={!habit.editable}
       >
         +
       </button>

@@ -32,6 +32,10 @@ export const HabitAddModal = () => {
     const modalEl = document.getElementById("HabitAddModal");
     const modal = bootstrap.Modal.getInstance(modalEl);
     modal.hide();
+
+    setName("");
+    setType(GOOD_HABIT);
+    setRepetitions(0);
   };
 
   return (

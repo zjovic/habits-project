@@ -238,37 +238,6 @@ ol {
   color: #fff;
 }
 
-/* HABITS LIST */
-.habits-list {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
-.habits-list-item {
-  margin: 20px;
-  font-size: 24px;
-  list-style-type: none;
-  display: flex;
-  justify-content: space-between;
-  width: 500px;
-}
-
-.habit {
-  flex: 1;
-  margin: 0 50px;
-}
-
-.habit-action {
-  background: none;
-  border: 2px solid #000;
-  text-align: center;
-  text-transform: uppercase;
-  padding: 15px 30px;
-  font-weight: bold;
-}
-
 /* PROGRESS */
 .progress {
   width: 100%;
@@ -409,6 +378,12 @@ ol {
     background: none;
     color: #000;
   }
+
+  &.disabled {
+    border: 2px solid lightgrey;
+    background: none;
+    color: lightgrey;
+  }
 }
 
 // SETTINGS LAYOUT
@@ -494,4 +469,44 @@ ol {
       color: lightgray;
     }
   }
+}
+
+/* HABITS LIST */
+.HabitsList {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.HabitsListItem {
+  margin: 20px;
+  font-size: 24px;
+  list-style-type: none;
+  display: flex;
+  justify-content: space-between;
+  width: 500px;
+
+  &-habit {
+    flex: 1;
+    margin: 0 50px;
+  }
+
+  &-action {
+    background: none;
+    border: 2px solid #000;
+    text-align: center;
+    text-transform: uppercase;
+    padding: 15px 30px;
+    font-weight: bold;
+
+    &.hidden {
+      visibility: hidden;
+    }
+  }
+}
+
+.FinishDayAction {
+  text-align: center;
+  margin-top: 40px;
 }

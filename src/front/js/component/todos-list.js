@@ -33,31 +33,31 @@ export const TodosList = () => {
     isSettingsRoute ? actions.deleteTodo(id) : actions.toggleTodo(id);
   };
 
-  // accomodate for empty state
+  if (!store.todos || store.todos.length === 0) {
+    return <p>Loading</p>;
+  }
+
+  // create empty state feedback component
   return (
     <div>
-      {!store.loading ? (
-        <ul className="TodosList">
-          {store.todos.map((todo) => {
-            return (
-              <li
-                className={`TodosList-item ${
-                  todo.state === ITEM_DONE ? "finished" : ""
-                } ${isSettingsRoute ? "settings" : ""}`}
-                key={todo.id}
-                onClick={() => handleItemClick(todo.id)}
-                onMouseEnter={() => setIsDeleteActionVisible(true)}
-                onMouseLeave={() => setIsDeleteActionVisible(false)}
-              >
-                {todo.name}
-                {isSettingsRoute && isDeleteActionVisible ? <TrashIcon /> : ""}
-              </li>
-            );
-          })}
-        </ul>
-      ) : (
-        ""
-      )}
+      <ul className="TodosList">
+        {store.todos.map((todo) => {
+          return (
+            <li
+              className={`TodosList-item ${
+                todo.state === ITEM_DONE ? "finished" : ""
+              } ${isSettingsRoute ? "settings" : ""}`}
+              key={todo.id}
+              onClick={() => handleItemClick(todo.id)}
+              onMouseEnter={() => setIsDeleteActionVisible(true)}
+              onMouseLeave={() => setIsDeleteActionVisible(false)}
+            >
+              {todo.name}
+              {isSettingsRoute && isDeleteActionVisible ? <TrashIcon /> : ""}
+            </li>
+          );
+        })}
+      </ul>
     </div>
   );
 };

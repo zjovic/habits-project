@@ -3,6 +3,7 @@ import { Context } from "../store/appContext";
 import { Tabs } from "../component/tabs.js";
 import { HabitsItem } from "../component/habit-item";
 import { Header } from "../component/header";
+import { FinishDayAction } from "../component/finish-day-action";
 
 export const Habits = () => {
   const { store, actions } = useContext(Context);
@@ -23,17 +24,20 @@ export const Habits = () => {
     }
   }, []);
 
-  // accomodate for empty state
-  // finish day button
+  if (!store.habits || store.habits.length === 0) {
+    return <p>Loading</p>;
+  }
+
   return (
     <div>
       <Header />
       <Tabs />
-      <ul className="habits-list">
+      <ul className="HabitsList">
         {store.habits.map((habit) => {
           return <HabitsItem habit={habit} key={habit.id} />;
         })}
       </ul>
+      <FinishDayAction />
     </div>
   );
 };
