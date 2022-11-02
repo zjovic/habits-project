@@ -18,7 +18,7 @@ const injectContext = (PassedComponent) => {
     );
 
     useEffect(() => {
-      state.actions.storeTokenFromSession();
+      // state.actions.storeTokenFromSession();
       state.actions.fetchTodos();
       state.actions.fetchHabits();
       state.actions.fetchUser();

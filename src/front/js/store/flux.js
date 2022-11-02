@@ -33,7 +33,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             }),
           };
 
-          await fetch(`${process.env.API_URL}/register`, options);
+          await fetch("https://3001-zjovic-habitsproject-g55bth0o9qz.ws-eu73.gitpod.io/api/register", options);
         } catch (error) {
           console.log("error", error);
         }
@@ -52,7 +52,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             }),
           };
 
-          const response = await fetch(`${process.env.API_URL}/login`, options);
+          const response = await fetch("https://3001-zjovic-habitsproject-g55bth0o9qz.ws-eu73.gitpod.io/api/login", options);
 
           if (response.status === 200) {
             const data = await response.json();
@@ -63,14 +63,14 @@ const getState = ({ getStore, getActions, setStore }) => {
         }
       },
 
-      storeTokenFromSession: () => {
-        const store = getStore();
-        const token = sessionStorage.getItem("token");
+      // storeTokenFromSession: () => {
+      //   const store = getStore();
+      //   const token = sessionStorage.getItem("token");
 
-        if (token && token != "" && token != undefined && !store.token) {
-          setStore({ token: token });
-        }
-      },
+      //   if (token && token != "" && token != undefined && !store.token) {
+      //     setStore({ token: token });
+      //   }
+      // },
 
       logout: () => {
         sessionStorage.removeItem("token");
@@ -118,7 +118,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             }),
           };
 
-          const response = await fetch(`${process.env.API_URL}/todo`, options);
+          const response = await fetch("https://3001-zjovic-habitsproject-g55bth0o9qz.ws-eu73.gitpod.io/api/todo", options);
 
           if (response.status === 401) {
             getActions().logout();
@@ -181,7 +181,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           };
 
           const response = await fetch(
-            `${process.env.API_URL}/todo/${id}`,
+            `https://3001-zjovic-habitsproject-g55bth0o9qz.ws-eu73.gitpod.io/api/todo/${id}`,
             options
           );
 
@@ -219,7 +219,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             },
           };
           const response = await fetch(
-            `${process.env.API_URL}/habits`,
+            `https://3001-zjovic-habitsproject-g55bth0o9qz.ws-eu73.gitpod.io/api/habits`,
             options
           );
 
@@ -251,7 +251,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             }),
           };
 
-          const response = await fetch(`${process.env.API_URL}/habit`, options);
+          const response = await fetch("https://3001-zjovic-habitsproject-g55bth0o9qz.ws-eu73.gitpod.io/api/habit", options);
 
           if (response.status === 401) {
             getActions().logout();
@@ -285,7 +285,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             }),
           };
           const response = await fetch(
-            `${process.env.API_URL}/habit/${id}`,
+            `https://3001-zjovic-habitsproject-g55bth0o9qz.ws-eu73.gitpod.io/api/habit/${id}`,
             options
           );
 
