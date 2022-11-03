@@ -3,6 +3,7 @@ import { Context } from "../../store/appContext";
 import { SettingsStats } from "./settings-stats";
 import { SettingsHabits } from "./settings-habits";
 import { SettingsTodos } from "./settings-todos";
+import PropTypes from "prop-types";
 
 export const SettingsContent = ({ currentPage }) => {
   const { store, actions } = useContext(Context);
@@ -20,4 +21,8 @@ export const SettingsContent = ({ currentPage }) => {
       })()}
     </div>
   );
+};
+
+SettingsContent.propTypes = {
+  currentPage: PropTypes.string,
 };

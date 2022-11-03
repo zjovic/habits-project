@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Context } from "../../store/appContext";
+import PropTypes from "prop-types";
 
 const GOOD_HABIT = 1;
 const BAD_HABIT = 0;
@@ -144,4 +145,8 @@ export const HabitEditModal = ({ habit }) => {
       </div>
     </div>
   );
+};
+
+HabitEditModal.propTypes = {
+  habit: PropTypes.object,
 };

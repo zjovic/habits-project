@@ -12,6 +12,7 @@ import {
   HabitIcon,
   TodoIcon,
 } from "../icons";
+import PropTypes from "prop-types";
 
 export const SettingsNav = ({ switchPage }) => {
   const { store, actions } = useContext(Context);
@@ -102,4 +103,8 @@ export const SettingsNav = ({ switchPage }) => {
       )}
     </div>
   );
+};
+
+SettingsNav.propTypes = {
+  switchPage: PropTypes.func,
 };
