@@ -46,20 +46,20 @@ export const Footer = () => {
   return (
     <div>
       {isBehindLogin ? (
-        <footer className="footer">
-          <Link to={redirectRoute} className="footer-link">
+        <footer className="Footer">
+          <Link to={redirectRoute} className="Footer-link">
             {redirectLabel}
           </Link>
-          <span className="footer-link" onClick={handleLogout}>
+          <span className="Footer-link" onClick={handleLogout}>
             Logout
           </span>
         </footer>
       ) : (
-        <footer className="footer">
-          <Link to={"/login"} className="footer-link">
+        <footer className="Footer">
+          <Link to={"/login"} className="Footer-link">
             Login
           </Link>
-          <Link to={"/register"} className="footer-link">
+          <Link to={"/register"} className="Footer-link">
             Register
           </Link>
         </footer>

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Context } from "../store/appContext";
+import { Context } from "../../store/appContext";
 import { useMatch } from "react-router-dom";
-import { TrashIcon } from "./icons";
+import { TrashIcon } from "../icons";
 
 export const TodosList = () => {
   const { store, actions } = useContext(Context);
@@ -14,32 +14,27 @@ export const TodosList = () => {
   const isSettingsRoute = useMatch("/settings");
 
   useEffect(() => {
-    if (store.todos.length === 0) {
-      const getTodos = async () => {
-        try {
-          actions.setLoading(true);
-          await actions.fetchTodos();
-          actions.setLoading(false);
-        } catch (error) {
-          console.log(error);
-        }
-      };
+    const getTodos = async () => {
+      try {
+        actions.setLoading(true);
+        await actions.fetchTodos();
+        actions.setLoading(false);
+      } catch (error) {
+        console.log(error);
+      }
+    };
 
-      getTodos();
-    }
+    getTodos();
   }, []);
 
   const handleItemClick = (id) => {
     isSettingsRoute ? actions.deleteTodo(id) : actions.toggleTodo(id);
   };
 
-  console.log("store", store);
-
-  if (!store?.todos || store?.todos?.length === 0) {
+  if (!store.todos || store.loading) {
     return <p>Loading</p>;
   }
 
-  // create empty state feedback component
   return (
     <div>
       <ul className="TodosList">

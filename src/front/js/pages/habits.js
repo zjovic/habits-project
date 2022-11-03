@@ -1,30 +1,28 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Context } from "../store/appContext";
 import { Tabs } from "../component/tabs.js";
-import { HabitsItem } from "../component/habit-item";
+import { HabitsItem } from "../component/habits/habit-item";
 import { Header } from "../component/header";
-import { FinishDayAction } from "../component/finish-day-action";
+import { FinishDayAction } from "../component/habits/finish-day-action";
 
 export const Habits = () => {
   const { store, actions } = useContext(Context);
 
   useEffect(() => {
-    if (store.habits.length === 0) {
-      const getHabits = async () => {
-        try {
-          actions.setLoading(true);
-          await actions.fetchHabits();
-          actions.setLoading(false);
-        } catch (error) {
-          console.log(error);
-        }
-      };
+    const getHabits = async () => {
+      try {
+        actions.setLoading(true);
+        await actions.fetchHabits();
+        actions.setLoading(false);
+      } catch (error) {
+        console.log(error);
+      }
+    };
 
-      getHabits();
-    }
+    getHabits();
   }, []);
 
-  if (!store?.habits || store?.habits?.length === 0) {
+  if (!store.habits || store.loading || store.habits.length === 0) {
     return <p>Loading</p>;
   }
 

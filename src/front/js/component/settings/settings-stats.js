@@ -18,6 +18,10 @@ export const SettingsStats = () => {
     getStats();
   }, []);
 
+  if (!store.stats || store.loading) {
+    return <p>Loading</p>;
+  }
+
   return (
     <div>
       <ul className="Stats">

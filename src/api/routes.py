@@ -19,6 +19,16 @@ api = Blueprint('api', __name__)
 def register_user():
     data = request.get_json()
 
+    if not data['email']:
+        return jsonify({"msg":'Email is required data', 'status': '1'}), 400
+    if not data['name']:
+        return jsonify({"msg":'Name is required data'}), 400
+    if not data['password']:
+        return jsonify({"msg":'Password is required data'}), 400
+    if len(data['password']) < 5:
+        return jsonify({"msg":'Password is to short', 'status': '4'}), 400
+    
+        
     hashed_password = generate_password_hash(data['password'], method = 'sha256')
 
     new_user = User(email = data['email'], name = data['name'], password = hashed_password, admin = 0)
@@ -402,10 +412,6 @@ def get_habits_stats():
         habitIds.append(habit.id)
 
     stats = db.session.query(Statistic).join(Habit).filter(Habit.id.in_(habitIds)).all()
-    # stats = db.session.query(Statistic).join(Habit).filter(Habit.id.in_(habitIds)).group_by(Statistic.created_at, Statistic.id).all()
-
-    # stats = db.session.query(Customer).join(Invoice).filter(Invoice.amount == 8500).all()
-    # stats = db.session.query(Statistic).join(Habit).filter(Statistic.habit_id == habit.id).all()
 
     output = []
 

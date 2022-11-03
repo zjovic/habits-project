@@ -21,7 +21,6 @@ dd {
 body {
   min-height: 100vh;
   font-family: "Open Sans", sans-serif;
-  overflow-x: hidden;
 }
 
 ul,
@@ -34,50 +33,16 @@ ol {
 /* STYLES */
 /* HOME */
 .home-container {
-  height: 100vh;
-  width: 100vw;
-  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
 }
 
 .home-bg {
   -o-object-fit: cover;
      object-fit: cover;
-  width: 100vw;
-  height: 100vh;
-}
-
-.home-actions {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  background-color: #fff;
-  padding: 30px;
-  display: flex;
-  justify-content: flex-end;
-  width: 100vw;
-}
-
-.home-action {
-  background: none;
-  border: 2px solid #000;
-  text-align: center;
-  text-transform: uppercase;
-  padding: 15px 30px;
-  font-weight: bold;
-}
-
-.home-actions .home-action {
-  margin-left: 10px;
-}
-
-.home-action--light {
-  background-color: #fff;
-  color: #000;
-}
-
-.home-action--dark {
-  background-color: #000;
-  color: #fff;
+  width: 100%;
+  height: 100%;
 }
 
 /* LOGIN */
@@ -247,9 +212,10 @@ ol {
   margin-bottom: 5px;
 }
 
-/* FOOTER */
-.footer {
-  position: absolute;
+/***********************NEW***********************/
+.Footer {
+  position: -webkit-sticky;
+  position: sticky;
   bottom: 0;
   left: 0;
   display: flex;
@@ -257,20 +223,16 @@ ol {
   align-items: center;
   justify-content: space-between;
   background-color: #000;
-  width: 100vw;
 }
-
-.footer-link {
+.Footer-link {
   font-weight: 800;
   color: #fff;
   text-transform: uppercase;
 }
-
-.footer-link:hover {
+.Footer-link:hover {
   cursor: pointer;
 }
 
-/***********************NEW***********************/
 .SettingsNav {
   padding-top: 30px;
   padding-left: 20px;
@@ -406,6 +368,10 @@ ol {
 }
 
 /* TODOS */
+.Todos {
+  margin-bottom: 40px;
+}
+
 .TodosList {
   display: flex;
   flex-direction: column;

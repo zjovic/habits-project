@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Context } from "../store/appContext";
+import { Context } from "../../store/appContext";
 import { Link, useParams } from "react-router-dom";
 
 export const AddTodo = () => {

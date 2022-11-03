@@ -34,9 +34,17 @@ const getState = ({ getStore, getActions, setStore }) => {
             }),
           };
 
-          await fetch(`${process.env.API_URL}/register`, options);
+          const response = await fetch(
+            `${process.env.API_URL}/register`,
+            options
+          );
+
+          if (response.status === 400) {
+            const error = await response.json();
+            throw error;
+          }
         } catch (error) {
-          console.log("error", error);
+          console.log("error", error.msg);
         }
       },
 
@@ -94,6 +102,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
           if (response.status === 401) {
             getActions().logout();
+            return;
           }
           const data = await response.json();
 
@@ -123,6 +132,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
           if (response.status === 401) {
             getActions().logout();
+            return;
           }
 
           if (response.status === 200) {
@@ -153,6 +163,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
           if (response.status === 401) {
             getActions().logout();
+            return;
           }
 
           if (response.status === 200) {
@@ -188,6 +199,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
           if (response.status === 401) {
             getActions().logout();
+            return;
           }
 
           if (response.status === 200) {
@@ -226,6 +238,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
           if (response.status === 401) {
             getActions().logout();
+            return;
           }
 
           const data = await response.json();
@@ -256,6 +269,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
           if (response.status === 401) {
             getActions().logout();
+            return;
           }
 
           if (response.status === 200) {
@@ -292,6 +306,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
           if (response.status === 401) {
             getActions().logout();
+            return;
           }
 
           const data = await response.json();
@@ -325,6 +340,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
           if (response.status === 401) {
             getActions().logout();
+            return;
           }
 
           const data = await response.json();
@@ -355,6 +371,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
           if (response.status === 401) {
             getActions().logout();
+            return;
           }
 
           const data = await response.json();
@@ -432,6 +449,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
           if (response.status === 401) {
             getActions().logout();
+            return;
           }
         } catch (error) {
           console.log("Edit name error", error);
@@ -454,6 +472,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
           if (response.status === 401) {
             getActions().logout();
+            return;
           }
 
           if (response.status === 200) {
@@ -483,6 +502,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
           if (response.status === 401) {
             getActions().logout();
+            return;
           }
 
           if (response.status === 200) {
