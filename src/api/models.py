@@ -74,6 +74,7 @@ class Habit(db.Model):
     type = db.Column(db.Integer, unique=False, nullable=False, default=1)
     num_of_repetitions = db.Column(db.Integer, unique=False, nullable=False)
     num_times_repeated = db.Column(db.Integer, unique=False, nullable=False, default=0)
+    editable = db.Column(db.Boolean, default=True)
 
     habit = relationship('Statistic', backref='habit')
 
@@ -88,6 +89,7 @@ class Habit(db.Model):
             'type': self.type,
             'num_of_repetitions': self.num_of_repetitions,
             'num_times_repeated': self.num_times_repeated,
+            'editable': self.editable
         }
 
 class Statistic(db.Model):

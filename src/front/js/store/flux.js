@@ -13,6 +13,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         "Habits change into character.",
       ],
       loading: false,
+      stats: [],
     },
     actions: {
       setLoading: (bool) => {
@@ -434,6 +435,64 @@ const getState = ({ getStore, getActions, setStore }) => {
           }
         } catch (error) {
           console.log("Edit name error", error);
+        }
+      },
+
+      finishDay: async () => {
+        try {
+          const options = {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+            },
+          };
+
+          const response = await fetch(
+            `${process.env.API_URL}/habits/reset`,
+            options
+          );
+
+          if (response.status === 401) {
+            getActions().logout();
+          }
+
+          if (response.status === 200) {
+            const data = await response.json();
+            const currHabits = data.habits;
+
+            setStore({ habits: [] });
+            setStore({ habits: currHabits });
+          }
+        } catch (error) {
+          console.log("error", error);
+        }
+      },
+
+      fetchStats: async () => {
+        try {
+          const options = {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+            },
+          };
+          const response = await fetch(
+            `${process.env.API_URL}/habits/stats`,
+            options
+          );
+
+          if (response.status === 401) {
+            getActions().logout();
+          }
+
+          if (response.status === 200) {
+            const data = await response.json();
+            const currStats = data.stats;
+
+            setStore({ stats: currStats });
+          }
+        } catch (error) {
+          console.log("Error loading habits from backend", error);
         }
       },
     },

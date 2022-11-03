@@ -83,11 +83,11 @@ if __name__ == '__main__':
 # Scheduled task
 scheduler = APScheduler()
 
-def scheduledTask():
+def cleanupFinishedTodos():
     with app.app_context():
         users = User.query.all()
 
-        print('Scheduled task')
+        print('cleanupFinishedTodos')
 
         current_time_string = datetime.now().strftime("%H:%M:%S")
         current_time = datetime.strptime(current_time_string,"%H:%M:%S")
@@ -106,11 +106,11 @@ def scheduledTask():
 
 # disable habit editing after day end, store data, reset repetitions
 
-def scheduledTaskTwo():
+def resetHabitsForTheDay():
     with app.app_context():
         users = User.query.all()
 
-        print('Scheduled task two')
+        print('resetHabitsForTheDay')
 
         current_time_string = datetime.now().strftime("%H:%M:%S")
         current_time = datetime.strptime(current_time_string,"%H:%M:%S")
@@ -121,15 +121,48 @@ def scheduledTaskTwo():
             user_set_time = datetime.strptime(user_set_time_string,"%H:%M:%S")
 
             if (current_time > user_set_time):
+                print(1)
                 habits = Habit.query.filter_by(user_id = user.id).all()
 
                 for habit in habits:
+                    if (habit.editable == False):
+                        return
+
                     record = Statistic(habit_id = habit.id, reps = habit.num_times_repeated)
+                    setattr(habit, 'num_times_repeated', 0)
+                    setattr(habit, 'editable', False)
 
                     db.session.add(record)
                     db.session.commit()
 
-# scheduler.add_job(id = "Scheduled task", func = scheduledTask, trigger = "interval", seconds = 3600)
-# scheduler.add_job(id = "Scheduled task two", func = scheduledTaskTwo, trigger = "interval", seconds = 60)
+def enableHabitsForTheDay():
+    with app.app_context():
+        users = User.query.all()
+
+        print('enableHabitsForTheDay')
+
+        current_time_string = datetime.now().strftime("%H:%M:%S")
+        current_time = datetime.strptime(current_time_string,"%H:%M:%S")
+
+        for user in users:
+            settings = Setting.query.filter_by(user_id = user.id).first()
+            user_set_time_string = settings.day_start.strftime("%H:%M:%S")
+            user_set_time = datetime.strptime(user_set_time_string,"%H:%M:%S")
+
+            if (current_time > user_set_time):
+                print(2)
+                habits = Habit.query.filter_by(user_id = user.id).all()
+
+                for habit in habits:
+                    if (habit.editable == True):
+                        return
+
+                    setattr(habit, 'editable', True)
+
+                    db.session.commit()
+
+# scheduler.add_job(id = "cleanupFinishedTodos", func = cleanupFinishedTodos, trigger = "interval", seconds = 3600)
+scheduler.add_job(id = "resetHabitsForTheDay two", func = resetHabitsForTheDay, trigger = "interval", seconds = 60)
+scheduler.add_job(id = "enableHabitsForTheDay", func = enableHabitsForTheDay, trigger = "interval", seconds = 60)
 scheduler.start()
 app.run(host="0.0.0.0", port = 8080)

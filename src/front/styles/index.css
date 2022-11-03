@@ -227,37 +227,6 @@ ol {
   color: #fff;
 }
 
-/* HABITS LIST */
-.habits-list {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
-.habits-list-item {
-  margin: 20px;
-  font-size: 24px;
-  list-style-type: none;
-  display: flex;
-  justify-content: space-between;
-  width: 500px;
-}
-
-.habit {
-  flex: 1;
-  margin: 0 50px;
-}
-
-.habit-action {
-  background: none;
-  border: 2px solid #000;
-  text-align: center;
-  text-transform: uppercase;
-  padding: 15px 30px;
-  font-weight: bold;
-}
-
 /* PROGRESS */
 .progress {
   width: 100%;
@@ -386,6 +355,11 @@ ol {
   background: none;
   color: #000;
 }
+.Button.disabled {
+  border: 2px solid lightgrey;
+  background: none;
+  color: lightgrey;
+}
 
 .Settings-content {
   display: flex;
@@ -455,4 +429,41 @@ ol {
 .TodosList-item.finished {
   text-decoration: line-through;
   color: lightgray;
+}
+
+/* HABITS LIST */
+.HabitsList {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.HabitsListItem {
+  margin: 20px;
+  font-size: 24px;
+  list-style-type: none;
+  display: flex;
+  justify-content: space-between;
+  width: 500px;
+}
+.HabitsListItem-habit {
+  flex: 1;
+  margin: 0 50px;
+}
+.HabitsListItem-action {
+  background: none;
+  border: 2px solid #000;
+  text-align: center;
+  text-transform: uppercase;
+  padding: 15px 30px;
+  font-weight: bold;
+}
+.HabitsListItem-action.hidden {
+  visibility: hidden;
+}
+
+.FinishDayAction {
+  text-align: center;
+  margin-top: 40px;
 }/*# sourceMappingURL=index.css.map */
