@@ -31,76 +31,55 @@ ol {
 }
 
 /* STYLES */
+.Wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
 
 /* HOME */
-.home-container {
+.Home {
   display: block;
   width: 100%;
   height: 100%;
-}
 
-.home-bg {
-  object-fit: cover;
-  width: 100%;
-  height: 100%;
+  &-bg {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+  }
 }
 
 /* LOGIN */
-.login-container {
+.Login {
   height: 100vh;
   width: 100vw;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-}
 
-.login-registerLink {
-  margin-top: 100%;
-}
-
-.login-action {
-  background: none;
-  border: 2px solid #000;
-  text-align: center;
-  text-transform: uppercase;
-  padding: 15px 30px;
-  font-weight: 800;
-  background-color: #000;
-  color: #fff;
-}
-
-.login-registerLink {
-  margin-top: 100%;
+  &-registerLink {
+    margin-top: 100%;
+  }
 }
 
 /* REGISTER */
-.register-container {
+.Register {
   height: 100vh;
   width: 100vw;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-}
 
-.register-action {
-  background: none;
-  border: 2px solid #000;
-  text-align: center;
-  text-transform: uppercase;
-  padding: 15px 30px;
-  font-weight: 800;
-  background-color: #000;
-  color: #fff;
-}
-
-.register-registerLink {
-  margin-top: 100%;
+  &-loginLink {
+    margin-top: 100%;
+  }
 }
 
 /* FORM */
-.habitsForm {
+.HabitsForm {
   display: flex;
   flex-direction: column;
   width: 300px;
@@ -150,14 +129,8 @@ ol {
   }
 }
 
-/* LISTS */
-.lists-container {
-  height: 100vh;
-  width: 100vw;
-}
-
 /* LISTS TABS */
-.list-tabs {
+.Tabs {
   display: flex;
   margin: 60px auto;
   justify-content: space-between;
@@ -165,28 +138,28 @@ ol {
   min-height: 100px;
   align-items: center;
   text-transform: uppercase;
-}
 
-.list-tab {
-  font-weight: 800;
-  font-size: 24px;
-  color: lightgray;
-  transition: font-size 0.25s ease-in;
-}
+  &-tab {
+    font-weight: 800;
+    font-size: 24px;
+    color: lightgray;
+    transition: font-size 0.25s ease-in;
 
-.list-tab.active {
-  font-weight: 800;
-  font-size: 36px;
-  color: #000;
-  transition: font-size 0.25s ease-out;
-}
+    &.active {
+      font-weight: 800;
+      font-size: 36px;
+      color: #000;
+      transition: font-size 0.25s ease-out;
+    }
 
-.list-tab:hover {
-  cursor: pointer;
+    &:hover {
+      cursor: pointer;
+    }
+  }
 }
 
 /* ADD TODO ACTION */
-.add-todo-container {
+.AddToDo {
   display: flex;
   justify-content: center;
   margin-top: 30px;
@@ -203,7 +176,7 @@ ol {
   color: #fff;
 }
 
-/* PROGRESS */
+/* PROGRESS BOOTSTRAP OVERRIDE*/
 .progress {
   width: 100%;
   height: 6px;
@@ -223,12 +196,10 @@ ol {
   margin-bottom: 5px;
 }
 
-/***********************NEW***********************/
-
 // FOOTER
 .Footer {
   position: sticky;
-  bottom: 0;
+  top: 100vh;
   left: 0;
   display: flex;
   padding: 20px;
@@ -442,6 +413,11 @@ ol {
 }
 
 /* HABITS LIST */
+.Habits {
+  margin-bottom: 40px;
+  flex: 1;
+}
+
 .HabitsList {
   display: flex;
   flex-direction: column;

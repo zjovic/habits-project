@@ -47,7 +47,7 @@ export const SettingsModal = () => {
           <div className="modal-body">
             <fieldset className="form-check form-switch">
               <label
-                className="form-check-label habitsForm-label"
+                className="form-check-label HabitsForm-label"
                 htmlFor="flexSwitchCheckChecked"
               >
                 Dark mode
@@ -63,8 +63,8 @@ export const SettingsModal = () => {
                 // checked={store.userSettings.mode === DARK_MODE}
               />
             </fieldset>
-            <fieldset className="habitsForm-fieldset">
-              <label className="habitsForm-label" htmlFor="lang">
+            <fieldset className="HabitsForm-fieldset">
+              <label className="HabitsForm-label" htmlFor="lang">
                 Choose a language:
               </label>
               <select
@@ -78,8 +78,8 @@ export const SettingsModal = () => {
                 <option value="HR">HR</option>
               </select>
             </fieldset>
-            <fieldset className="habitsForm-fieldset">
-              <label className="habitsForm-label" htmlFor="dayStart">
+            <fieldset className="HabitsForm-fieldset">
+              <label className="HabitsForm-label" htmlFor="dayStart">
                 Day start:
               </label>
               <input
@@ -92,8 +92,8 @@ export const SettingsModal = () => {
                 }}
               />
             </fieldset>
-            <fieldset className="habitsForm-fieldset">
-              <label className="habitsForm-label" htmlFor="dayEnd">
+            <fieldset className="HabitsForm-fieldset">
+              <label className="HabitsForm-label" htmlFor="dayEnd">
                 Day end:
               </label>
               <input

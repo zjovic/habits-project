@@ -27,7 +27,7 @@ export const Habits = () => {
   }
 
   return (
-    <div>
+    <div className="Habits">
       <Header />
       <Tabs />
       <ul className="HabitsList">

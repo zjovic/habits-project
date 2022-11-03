@@ -34,13 +34,13 @@ export const NameModal = () => {
       <div className="modal-dialog modal-dialog-centered modal-dialog-scrollable">
         <div className="modal-content">
           <div className="modal-body">
-            <fieldset className="habitsForm-fieldset">
-              <label className="habitsForm-label" htmlFor="name">
+            <fieldset className="HabitsForm-fieldset">
+              <label className="HabitsForm-label" htmlFor="name">
                 Name
               </label>
               <input
                 id="name"
-                className="habitsForm-input"
+                className="HabitsForm-input"
                 type="text"
                 name="name"
                 value={name}

@@ -31,14 +31,19 @@ ol {
 }
 
 /* STYLES */
+.Wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
 /* HOME */
-.home-container {
+.Home {
   display: block;
   width: 100%;
   height: 100%;
 }
-
-.home-bg {
+.Home-bg {
   -o-object-fit: cover;
      object-fit: cover;
   width: 100%;
@@ -46,7 +51,7 @@ ol {
 }
 
 /* LOGIN */
-.login-container {
+.Login {
   height: 100vh;
   width: 100vw;
   display: flex;
@@ -54,28 +59,12 @@ ol {
   align-items: center;
   justify-content: center;
 }
-
-.login-registerLink {
-  margin-top: 100%;
-}
-
-.login-action {
-  background: none;
-  border: 2px solid #000;
-  text-align: center;
-  text-transform: uppercase;
-  padding: 15px 30px;
-  font-weight: 800;
-  background-color: #000;
-  color: #fff;
-}
-
-.login-registerLink {
+.Login-registerLink {
   margin-top: 100%;
 }
 
 /* REGISTER */
-.register-container {
+.Register {
   height: 100vh;
   width: 100vw;
   display: flex;
@@ -83,70 +72,52 @@ ol {
   align-items: center;
   justify-content: center;
 }
-
-.register-action {
-  background: none;
-  border: 2px solid #000;
-  text-align: center;
-  text-transform: uppercase;
-  padding: 15px 30px;
-  font-weight: 800;
-  background-color: #000;
-  color: #fff;
-}
-
-.register-registerLink {
+.Register-loginLink {
   margin-top: 100%;
 }
 
 /* FORM */
-.habitsForm {
+.HabitsForm {
   display: flex;
   flex-direction: column;
   width: 300px;
 }
-.habitsForm-title {
+.HabitsForm-title {
   text-transform: uppercase;
   font-weight: 800;
   margin-bottom: 30px;
 }
-.habitsForm-fieldset {
+.HabitsForm-fieldset {
   display: flex;
   flex-direction: column;
   margin-bottom: 30px;
 }
-.habitsForm-legend {
+.HabitsForm-legend {
   text-transform: uppercase;
   font-weight: 800;
   font-size: 16px;
 }
-.habitsForm-label {
+.HabitsForm-label {
   font-weight: bold;
   text-transform: uppercase;
   margin-bottom: 5px;
 }
-.habitsForm-input, .habitsForm-input:focus, .habitsForm-input:focus-visible {
+.HabitsForm-input, .HabitsForm-input:focus, .HabitsForm-input:focus-visible {
   border: 2px solid #000;
   border-radius: 0;
   padding: 15px 20px;
   outline: 0;
 }
-.habitsForm-input[type=radio] {
+.HabitsForm-input[type=radio] {
   margin: 0 10px;
 }
-.habitsForm-error {
+.HabitsForm-error {
   color: red;
   margin-bottom: 30px;
 }
 
-/* LISTS */
-.lists-container {
-  height: 100vh;
-  width: 100vw;
-}
-
 /* LISTS TABS */
-.list-tabs {
+.Tabs {
   display: flex;
   margin: 60px auto;
   justify-content: space-between;
@@ -155,27 +126,24 @@ ol {
   align-items: center;
   text-transform: uppercase;
 }
-
-.list-tab {
+.Tabs-tab {
   font-weight: 800;
   font-size: 24px;
   color: lightgray;
   transition: font-size 0.25s ease-in;
 }
-
-.list-tab.active {
+.Tabs-tab.active {
   font-weight: 800;
   font-size: 36px;
   color: #000;
   transition: font-size 0.25s ease-out;
 }
-
-.list-tab:hover {
+.Tabs-tab:hover {
   cursor: pointer;
 }
 
 /* ADD TODO ACTION */
-.add-todo-container {
+.AddToDo {
   display: flex;
   justify-content: center;
   margin-top: 30px;
@@ -192,7 +160,7 @@ ol {
   color: #fff;
 }
 
-/* PROGRESS */
+/* PROGRESS BOOTSTRAP OVERRIDE*/
 .progress {
   width: 100%;
   height: 6px;
@@ -212,11 +180,10 @@ ol {
   margin-bottom: 5px;
 }
 
-/***********************NEW***********************/
 .Footer {
   position: -webkit-sticky;
   position: sticky;
-  bottom: 0;
+  top: 100vh;
   left: 0;
   display: flex;
   padding: 20px;
@@ -398,6 +365,11 @@ ol {
 }
 
 /* HABITS LIST */
+.Habits {
+  margin-bottom: 40px;
+  flex: 1;
+}
+
 .HabitsList {
   display: flex;
   flex-direction: column;

@@ -19,8 +19,8 @@ export const Home = () => {
   }, []);
 
   return (
-    <div className="home-container">
-      <img src={homeBg} className="home-bg" />
+    <div className="Home">
+      <img src={homeBg} className="Home-bg" />
     </div>
   );
 };

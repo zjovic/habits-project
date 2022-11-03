@@ -41,7 +41,7 @@ export const Register = () => {
   };
 
   return (
-    <div className="register-container">
+    <div className="Register">
       {showSuccessScreen ? (
         <p>
           Your registration was successful, please proceed to{" "}
@@ -49,15 +49,15 @@ export const Register = () => {
         </p>
       ) : (
         <div>
-          <form className="habitsForm">
-            <h1 className="habitsForm-title">Register</h1>
-            <fieldset className="habitsForm-fieldset">
-              <label className="habitsForm-label" htmlFor="email">
+          <form className="HabitsForm">
+            <h1 className="HabitsForm-title">Register</h1>
+            <fieldset className="HabitsForm-fieldset">
+              <label className="HabitsForm-label" htmlFor="email">
                 Email address
               </label>
               <input
                 id="email"
-                className="habitsForm-input"
+                className="HabitsForm-input"
                 type="text"
                 name="email"
                 value={email}
@@ -66,13 +66,13 @@ export const Register = () => {
                 }}
               />
             </fieldset>
-            <fieldset className="habitsForm-fieldset">
-              <label className="habitsForm-label" htmlFor="name">
+            <fieldset className="HabitsForm-fieldset">
+              <label className="HabitsForm-label" htmlFor="name">
                 Name
               </label>
               <input
                 id="name"
-                className="habitsForm-input"
+                className="HabitsForm-input"
                 type="text"
                 name="name"
                 value={name}
@@ -81,13 +81,13 @@ export const Register = () => {
                 }}
               />
             </fieldset>
-            <fieldset className="habitsForm-fieldset">
-              <label className="habitsForm-label" htmlFor="password">
+            <fieldset className="HabitsForm-fieldset">
+              <label className="HabitsForm-label" htmlFor="password">
                 Password
               </label>
               <input
                 id="password"
-                className="habitsForm-input"
+                className="HabitsForm-input"
                 type="password"
                 name="password"
                 value={password}
@@ -96,13 +96,13 @@ export const Register = () => {
                 }}
               />
             </fieldset>
-            <fieldset className="habitsForm-fieldset">
-              <label className="habitsForm-label" htmlFor="changePassword">
+            <fieldset className="HabitsForm-fieldset">
+              <label className="HabitsForm-label" htmlFor="changePassword">
                 Password
               </label>
               <input
                 id="changePassword"
-                className="habitsForm-input"
+                className="HabitsForm-input"
                 type="password"
                 name="changePassword"
                 value={changePassword}
@@ -112,7 +112,7 @@ export const Register = () => {
               />
             </fieldset>
             {showErrorMessage ? (
-              <div className="habitsForm-error">
+              <div className="HabitsForm-error">
                 Please check the data entered!
               </div>
             ) : (
@@ -120,15 +120,15 @@ export const Register = () => {
             )}
             <button
               type="submit"
-              className="register-action"
+              className="Button Button--confirm"
               onClick={handleSubmit}
             >
               Submit
             </button>
           </form>
           <div>
-            <p className="register-registerLink">
-              Don’t have an account yet? <Link to="/login">Login now.</Link>
+            <p className="Register-loginLink">
+              Already have an account? <Link to="/login">Login now.</Link>
             </p>
           </div>
         </div>

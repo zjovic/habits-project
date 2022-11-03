@@ -48,13 +48,13 @@ export const PasswordModal = () => {
       <div className="modal-dialog modal-dialog-centered modal-dialog-scrollable">
         <div className="modal-content">
           <div className="modal-body">
-            <fieldset className="habitsForm-fieldset">
-              <label className="habitsForm-label" htmlFor="currentPassword">
+            <fieldset className="HabitsForm-fieldset">
+              <label className="HabitsForm-label" htmlFor="currentPassword">
                 Current password
               </label>
               <input
                 id="currentPassword"
-                className="habitsForm-input"
+                className="HabitsForm-input"
                 type="password"
                 name="currentPassword"
                 value={currentPassword}
@@ -63,13 +63,13 @@ export const PasswordModal = () => {
                 }}
               />
             </fieldset>
-            <fieldset className="habitsForm-fieldset">
-              <label className="habitsForm-label" htmlFor="newPassword">
+            <fieldset className="HabitsForm-fieldset">
+              <label className="HabitsForm-label" htmlFor="newPassword">
                 New password
               </label>
               <input
                 id="newPassword"
-                className="habitsForm-input"
+                className="HabitsForm-input"
                 type="password"
                 name="newPassword"
                 value={newPassword}
@@ -78,13 +78,13 @@ export const PasswordModal = () => {
                 }}
               />
             </fieldset>
-            <fieldset className="habitsForm-fieldset">
-              <label className="habitsForm-label" htmlFor="changePassword">
+            <fieldset className="HabitsForm-fieldset">
+              <label className="HabitsForm-label" htmlFor="changePassword">
                 Repeat new password
               </label>
               <input
                 id="changePassword"
-                className="habitsForm-input"
+                className="HabitsForm-input"
                 type="password"
                 name="changePassword"
                 value={changePassword}
