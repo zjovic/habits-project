@@ -104,8 +104,6 @@ def cleanupFinishedTodos():
                     db.session.delete(todo)
                     db.session.commit()
 
-# disable habit editing after day end, store data, reset repetitions
-
 def resetHabitsForTheDay():
     with app.app_context():
         users = User.query.all()
@@ -121,7 +119,6 @@ def resetHabitsForTheDay():
             user_set_time = datetime.strptime(user_set_time_string,"%H:%M:%S")
 
             if (current_time > user_set_time):
-                print(1)
                 habits = Habit.query.filter_by(user_id = user.id).all()
 
                 for habit in habits:
@@ -146,11 +143,12 @@ def enableHabitsForTheDay():
 
         for user in users:
             settings = Setting.query.filter_by(user_id = user.id).first()
-            user_set_time_string = settings.day_start.strftime("%H:%M:%S")
-            user_set_time = datetime.strptime(user_set_time_string,"%H:%M:%S")
+            user_set_start_time_string = settings.day_start.strftime("%H:%M:%S")
+            user_set_end_time_string = settings.day_end.strftime("%H:%M:%S")
+            user_set_start_time = datetime.strptime(user_set_start_time_string,"%H:%M:%S")
+            user_set_end_time = datetime.strptime(user_set_end_time_string,"%H:%M:%S")
 
-            if (current_time > user_set_time):
-                print(2)
+            if (current_time > user_set_start_time and current_time > user_set_end_time):
                 habits = Habit.query.filter_by(user_id = user.id).all()
 
                 for habit in habits:

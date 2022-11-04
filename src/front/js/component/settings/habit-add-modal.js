@@ -49,13 +49,13 @@ export const HabitAddModal = () => {
       <div className="modal-dialog modal-dialog-centered modal-dialog-scrollable">
         <div className="modal-content">
           <div className="modal-body">
-            <fieldset className="habitsForm-fieldset">
-              <label className="habitsForm-label" htmlFor="name">
+            <fieldset className="HabitsForm-fieldset">
+              <label className="HabitsForm-label" htmlFor="name">
                 Name
               </label>
               <input
                 id="name"
-                className="habitsForm-input"
+                className="HabitsForm-input"
                 type="text"
                 name="name"
                 value={name}
@@ -65,15 +65,15 @@ export const HabitAddModal = () => {
               />
             </fieldset>
             <fieldset
-              className="habitsForm-fieldset"
+              className="HabitsForm-fieldset"
               onChange={(e) => {
                 setType(e.target.value);
               }}
             >
-              <legend className="habitsForm-legend">Type of habit</legend>
-              <label className="habitsForm-label" htmlFor="type">
+              <legend className="HabitsForm-legend">Type of habit</legend>
+              <label className="HabitsForm-label" htmlFor="type">
                 <input
-                  className="habitsForm-input"
+                  className="HabitsForm-input"
                   type="radio"
                   id="good"
                   name="type"
@@ -82,9 +82,9 @@ export const HabitAddModal = () => {
                 />
                 <span>Good</span>
               </label>
-              <label className="habitsForm-label" htmlFor="type">
+              <label className="HabitsForm-label" htmlFor="type">
                 <input
-                  className="habitsForm-input"
+                  className="HabitsForm-input"
                   type="radio"
                   id="bad"
                   name="type"
@@ -94,13 +94,13 @@ export const HabitAddModal = () => {
                 <span>Bad</span>
               </label>
             </fieldset>
-            <fieldset className="habitsForm-fieldset">
-              <label className="habitsForm-label" htmlFor="repetitions">
+            <fieldset className="HabitsForm-fieldset">
+              <label className="HabitsForm-label" htmlFor="repetitions">
                 Number of repetitions
               </label>
               <input
                 id="repetitions"
-                className="habitsForm-input"
+                className="HabitsForm-input"
                 type="number"
                 min="0"
                 max="99"

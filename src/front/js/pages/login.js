@@ -29,16 +29,16 @@ export const Login = () => {
   };
 
   return (
-    <div className="login-container">
-      <form className="habitsForm">
-        <h1 className="habitsForm-title">Login</h1>
-        <fieldset className="habitsForm-fieldset">
-          <label className="habitsForm-label" htmlFor="email">
+    <div className="Login">
+      <form className="HabitsForm">
+        <h1 className="HabitsForm-title">Login</h1>
+        <fieldset className="HabitsForm-fieldset">
+          <label className="HabitsForm-label" htmlFor="email">
             Email address
           </label>
           <input
             id="email"
-            className="habitsForm-input"
+            className="HabitsForm-input"
             type="text"
             name="email"
             value={email}
@@ -47,13 +47,13 @@ export const Login = () => {
             }}
           />
         </fieldset>
-        <fieldset className="habitsForm-fieldset">
-          <label className="habitsForm-label" htmlFor="password">
+        <fieldset className="HabitsForm-fieldset">
+          <label className="HabitsForm-label" htmlFor="password">
             Password
           </label>
           <input
             id="password"
-            className="habitsForm-input"
+            className="HabitsForm-input"
             type="password"
             name="password"
             value={password}
@@ -63,16 +63,20 @@ export const Login = () => {
           />
         </fieldset>
         {showErrorMessage ? (
-          <div className="habitsForm-error">Please check the data entered!</div>
+          <div className="HabitsForm-error">Please check the data entered!</div>
         ) : (
           ""
         )}
-        <button type="submit" className="login-action" onClick={handleSubmit}>
+        <button
+          type="submit"
+          className="Button Button--confirm"
+          onClick={handleSubmit}
+        >
           Submit
         </button>
       </form>
       <div>
-        <p className="login-registerLink">
+        <p className="Login-registerLink">
           Don’t have an account yet? <Link to="/register">Register now.</Link>
         </p>
       </div>

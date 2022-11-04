@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Context } from "../../store/appContext";
+import PropTypes from "prop-types";
 
 const GOOD_HABIT = 1;
 const BAD_HABIT = 0;
@@ -58,13 +59,13 @@ export const HabitEditModal = ({ habit }) => {
         <div className="modal-content">
           {data ? (
             <div className="modal-body">
-              <fieldset className="habitsForm-fieldset">
-                <label className="habitsForm-label" htmlFor="name">
+              <fieldset className="HabitsForm-fieldset">
+                <label className="HabitsForm-label" htmlFor="name">
                   Name
                 </label>
                 <input
                   id="name"
-                  className="habitsForm-input"
+                  className="HabitsForm-input"
                   type="text"
                   name="name"
                   value={name}
@@ -74,15 +75,15 @@ export const HabitEditModal = ({ habit }) => {
                 />
               </fieldset>
               <fieldset
-                className="habitsForm-fieldset"
+                className="HabitsForm-fieldset"
                 onChange={(e) => {
                   setType(e.target.value);
                 }}
               >
-                <legend className="habitsForm-legend">Type of habit</legend>
-                <label className="habitsForm-label" htmlFor="type">
+                <legend className="HabitsForm-legend">Type of habit</legend>
+                <label className="HabitsForm-label" htmlFor="type">
                   <input
-                    className="habitsForm-input"
+                    className="HabitsForm-input"
                     type="radio"
                     id="good"
                     name="type"
@@ -91,9 +92,9 @@ export const HabitEditModal = ({ habit }) => {
                   />
                   <span>Good</span>
                 </label>
-                <label className="habitsForm-label" htmlFor="type">
+                <label className="HabitsForm-label" htmlFor="type">
                   <input
-                    className="habitsForm-input"
+                    className="HabitsForm-input"
                     type="radio"
                     id="bad"
                     name="type"
@@ -103,13 +104,13 @@ export const HabitEditModal = ({ habit }) => {
                   <span>Bad</span>
                 </label>
               </fieldset>
-              <fieldset className="habitsForm-fieldset">
-                <label className="habitsForm-label" htmlFor="repetitions">
+              <fieldset className="HabitsForm-fieldset">
+                <label className="HabitsForm-label" htmlFor="repetitions">
                   Number of repetitions
                 </label>
                 <input
                   id="repetitions"
-                  className="habitsForm-input"
+                  className="HabitsForm-input"
                   type="number"
                   min="0"
                   max="99"
@@ -144,4 +145,8 @@ export const HabitEditModal = ({ habit }) => {
       </div>
     </div>
   );
+};
+
+HabitEditModal.propTypes = {
+  habit: PropTypes.object,
 };

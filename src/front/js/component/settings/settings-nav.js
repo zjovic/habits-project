@@ -12,25 +12,28 @@ import {
   HabitIcon,
   TodoIcon,
 } from "../icons";
+import PropTypes from "prop-types";
 
 export const SettingsNav = ({ switchPage }) => {
   const { store, actions } = useContext(Context);
 
   useEffect(() => {
-    if (Object.keys(store.userSettings).length === 0) {
-      const getUserData = async () => {
-        try {
-          actions.setLoading(true);
-          await actions.fetchUser();
-          actions.setLoading(false);
-        } catch (error) {
-          console.log(error);
-        }
-      };
+    const getUserData = async () => {
+      try {
+        actions.setLoading(true);
+        await actions.fetchUser();
+        actions.setLoading(false);
+      } catch (error) {
+        console.log(error);
+      }
+    };
 
-      getUserData();
-    }
+    getUserData();
   }, []);
+
+  if (!store.userSettings || store.loading) {
+    return <p>Loading</p>;
+  }
 
   return (
     <div className="SettingsNav h-100">
@@ -100,4 +103,8 @@ export const SettingsNav = ({ switchPage }) => {
       )}
     </div>
   );
+};
+
+SettingsNav.propTypes = {
+  switchPage: PropTypes.func,
 };

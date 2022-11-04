@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
-import { Context } from "../store/appContext";
+import { Context } from "../../store/appContext";
 
 export const FinishDayAction = () => {
   const { store, actions } = useContext(Context);

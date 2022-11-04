@@ -21,7 +21,6 @@ dd {
 body {
   min-height: 100vh;
   font-family: "Open Sans", sans-serif;
-  overflow-x: hidden;
 }
 
 ul,
@@ -32,56 +31,27 @@ ol {
 }
 
 /* STYLES */
-/* HOME */
-.home-container {
-  height: 100vh;
-  width: 100vw;
-  position: relative;
+.Wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
-.home-bg {
+/* HOME */
+.Home {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.Home-bg {
   -o-object-fit: cover;
      object-fit: cover;
-  width: 100vw;
-  height: 100vh;
-}
-
-.home-actions {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  background-color: #fff;
-  padding: 30px;
-  display: flex;
-  justify-content: flex-end;
-  width: 100vw;
-}
-
-.home-action {
-  background: none;
-  border: 2px solid #000;
-  text-align: center;
-  text-transform: uppercase;
-  padding: 15px 30px;
-  font-weight: bold;
-}
-
-.home-actions .home-action {
-  margin-left: 10px;
-}
-
-.home-action--light {
-  background-color: #fff;
-  color: #000;
-}
-
-.home-action--dark {
-  background-color: #000;
-  color: #fff;
+  width: 100%;
+  height: 100%;
 }
 
 /* LOGIN */
-.login-container {
+.Login {
   height: 100vh;
   width: 100vw;
   display: flex;
@@ -89,28 +59,12 @@ ol {
   align-items: center;
   justify-content: center;
 }
-
-.login-registerLink {
-  margin-top: 100%;
-}
-
-.login-action {
-  background: none;
-  border: 2px solid #000;
-  text-align: center;
-  text-transform: uppercase;
-  padding: 15px 30px;
-  font-weight: 800;
-  background-color: #000;
-  color: #fff;
-}
-
-.login-registerLink {
+.Login-registerLink {
   margin-top: 100%;
 }
 
 /* REGISTER */
-.register-container {
+.Register {
   height: 100vh;
   width: 100vw;
   display: flex;
@@ -118,70 +72,52 @@ ol {
   align-items: center;
   justify-content: center;
 }
-
-.register-action {
-  background: none;
-  border: 2px solid #000;
-  text-align: center;
-  text-transform: uppercase;
-  padding: 15px 30px;
-  font-weight: 800;
-  background-color: #000;
-  color: #fff;
-}
-
-.register-registerLink {
+.Register-loginLink {
   margin-top: 100%;
 }
 
 /* FORM */
-.habitsForm {
+.HabitsForm {
   display: flex;
   flex-direction: column;
   width: 300px;
 }
-.habitsForm-title {
+.HabitsForm-title {
   text-transform: uppercase;
   font-weight: 800;
   margin-bottom: 30px;
 }
-.habitsForm-fieldset {
+.HabitsForm-fieldset {
   display: flex;
   flex-direction: column;
   margin-bottom: 30px;
 }
-.habitsForm-legend {
+.HabitsForm-legend {
   text-transform: uppercase;
   font-weight: 800;
   font-size: 16px;
 }
-.habitsForm-label {
+.HabitsForm-label {
   font-weight: bold;
   text-transform: uppercase;
   margin-bottom: 5px;
 }
-.habitsForm-input, .habitsForm-input:focus, .habitsForm-input:focus-visible {
+.HabitsForm-input, .HabitsForm-input:focus, .HabitsForm-input:focus-visible {
   border: 2px solid #000;
   border-radius: 0;
   padding: 15px 20px;
   outline: 0;
 }
-.habitsForm-input[type=radio] {
+.HabitsForm-input[type=radio] {
   margin: 0 10px;
 }
-.habitsForm-error {
+.HabitsForm-error {
   color: red;
   margin-bottom: 30px;
 }
 
-/* LISTS */
-.lists-container {
-  height: 100vh;
-  width: 100vw;
-}
-
 /* LISTS TABS */
-.list-tabs {
+.Tabs {
   display: flex;
   margin: 60px auto;
   justify-content: space-between;
@@ -190,27 +126,24 @@ ol {
   align-items: center;
   text-transform: uppercase;
 }
-
-.list-tab {
+.Tabs-tab {
   font-weight: 800;
   font-size: 24px;
   color: lightgray;
   transition: font-size 0.25s ease-in;
 }
-
-.list-tab.active {
+.Tabs-tab.active {
   font-weight: 800;
   font-size: 36px;
   color: #000;
   transition: font-size 0.25s ease-out;
 }
-
-.list-tab:hover {
+.Tabs-tab:hover {
   cursor: pointer;
 }
 
 /* ADD TODO ACTION */
-.add-todo-container {
+.AddToDo {
   display: flex;
   justify-content: center;
   margin-top: 30px;
@@ -227,7 +160,7 @@ ol {
   color: #fff;
 }
 
-/* PROGRESS */
+/* PROGRESS BOOTSTRAP OVERRIDE*/
 .progress {
   width: 100%;
   height: 6px;
@@ -247,30 +180,26 @@ ol {
   margin-bottom: 5px;
 }
 
-/* FOOTER */
-.footer {
-  position: absolute;
-  bottom: 0;
+.Footer {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 100vh;
   left: 0;
   display: flex;
   padding: 20px;
   align-items: center;
   justify-content: space-between;
   background-color: #000;
-  width: 100vw;
 }
-
-.footer-link {
+.Footer-link {
   font-weight: 800;
   color: #fff;
   text-transform: uppercase;
 }
-
-.footer-link:hover {
+.Footer-link:hover {
   cursor: pointer;
 }
 
-/***********************NEW***********************/
 .SettingsNav {
   padding-top: 30px;
   padding-left: 20px;
@@ -406,6 +335,10 @@ ol {
 }
 
 /* TODOS */
+.Todos {
+  margin-bottom: 40px;
+}
+
 .TodosList {
   display: flex;
   flex-direction: column;
@@ -432,6 +365,11 @@ ol {
 }
 
 /* HABITS LIST */
+.Habits {
+  margin-bottom: 40px;
+  flex: 1;
+}
+
 .HabitsList {
   display: flex;
   flex-direction: column;

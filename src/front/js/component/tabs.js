@@ -13,10 +13,10 @@ export const Tabs = () => {
   const [activeTab, setActiveTab] = useState(isTodosRoute ? "todos" : "habits");
 
   return (
-    <div className="list-tabs">
+    <div className="Tabs">
       <Link to="/todos">
         <span
-          className={`list-tab ${activeTab === "todos" ? "active" : ""}`}
+          className={`Tabs-tab ${activeTab === "todos" ? "active" : ""}`}
           onClick={() => {
             setActiveTab("todos");
           }}
@@ -26,7 +26,7 @@ export const Tabs = () => {
       </Link>
       <Link to="/habits">
         <span
-          className={`list-tab ${activeTab === "habits" ? "active" : ""}`}
+          className={`Tabs-tab ${activeTab === "habits" ? "active" : ""}`}
           onClick={() => {
             setActiveTab("habits");
           }}

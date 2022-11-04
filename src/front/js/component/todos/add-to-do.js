@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Context } from "../store/appContext";
+import { Context } from "../../store/appContext";
 import { Link, useParams } from "react-router-dom";
 
 export const AddTodo = () => {
@@ -14,16 +14,16 @@ export const AddTodo = () => {
   };
 
   return (
-    <div className="add-todo-container">
+    <div className="AddToDo">
       <input
-        className="habitsForm-input"
+        className="HabitsForm-input"
         type="text"
         value={name}
         onChange={(e) => {
           setName(e.target.value);
         }}
       ></input>
-      <button className="add-todo-action" onClick={handleSubmit}>
+      <button className="Button Button--confirm" onClick={handleSubmit}>
         Add todo
       </button>
     </div>
