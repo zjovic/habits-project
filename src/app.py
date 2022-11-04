@@ -148,7 +148,7 @@ def enableHabitsForTheDay():
             user_set_start_time = datetime.strptime(user_set_start_time_string,"%H:%M:%S")
             user_set_end_time = datetime.strptime(user_set_end_time_string,"%H:%M:%S")
 
-            if (current_time > user_set_start_time and current_time > user_set_end_time):
+            if (current_time > user_set_start_time and current_time < user_set_end_time):
                 habits = Habit.query.filter_by(user_id = user.id).all()
 
                 for habit in habits:
@@ -159,8 +159,8 @@ def enableHabitsForTheDay():
 
                     db.session.commit()
 
-# scheduler.add_job(id = "cleanupFinishedTodos", func = cleanupFinishedTodos, trigger = "interval", seconds = 3600)
-scheduler.add_job(id = "resetHabitsForTheDay two", func = resetHabitsForTheDay, trigger = "interval", seconds = 60)
+scheduler.add_job(id = "cleanupFinishedTodos", func = cleanupFinishedTodos, trigger = "interval", seconds = 3600)
+scheduler.add_job(id = "resetHabitsForTheDay", func = resetHabitsForTheDay, trigger = "interval", seconds = 60)
 scheduler.add_job(id = "enableHabitsForTheDay", func = enableHabitsForTheDay, trigger = "interval", seconds = 60)
 scheduler.start()
 app.run(host="0.0.0.0", port = 8080)

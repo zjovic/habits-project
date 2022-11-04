@@ -10,19 +10,17 @@ export const Settings = () => {
   const [page, setPage] = useState("stats");
 
   useEffect(() => {
-    if (Object.keys(store.userSettings).length === 0) {
-      const getUserData = async () => {
-        try {
-          actions.setLoading(true);
-          await actions.fetchUser();
-          actions.setLoading(false);
-        } catch (error) {
-          console.log(error);
-        }
-      };
+    const getUserData = async () => {
+      try {
+        actions.setLoading(true);
+        await actions.fetchUser();
+        actions.setLoading(false);
+      } catch (error) {
+        console.log(error);
+      }
+    };
 
-      getUserData();
-    }
+    getUserData();
   }, []);
 
   const switchPage = (value) => {
