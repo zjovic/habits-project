@@ -39,7 +39,11 @@ export const HabitsItem = ({ habit }) => {
         className={`HabitsListItem-action ${
           !habit.num_of_repetitions > 0 ? "hidden" : ""
         } ${habit.editable ? "" : "disabled"}`}
-        onClick={() => setRepeated(repeated - 1)}
+        onClick={() => {
+          if (repeated > 0) {setRepeated(repeated - 1)} 
+          // else setRepeated(0)
+          }
+        }
         disabled={!habit.editable || store.loading}
       >
         -

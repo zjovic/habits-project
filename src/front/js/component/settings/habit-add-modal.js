@@ -9,7 +9,7 @@ export const HabitAddModal = () => {
 
   const [name, setName] = useState("");
   const [type, setType] = useState(GOOD_HABIT);
-  const [repetitions, setRepetitions] = useState(0);
+  const [repetitions, setRepetitions] = useState(1);
 
   const onChangeType = (e) => {
     setType(e.target.value);
@@ -102,7 +102,7 @@ export const HabitAddModal = () => {
                 id="repetitions"
                 className="HabitsForm-input"
                 type="number"
-                min="0"
+                min="1"
                 max="99"
                 name="repetitions"
                 value={repetitions}

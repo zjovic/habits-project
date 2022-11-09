@@ -35,7 +35,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           };
 
           const response = await fetch(
-            `${process.env.API_URL}/register`,
+            `${process.env.BACKEND_URL}/api/register`,
             options
           );
 
@@ -61,7 +61,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             }),
           };
 
-          const response = await fetch(`${process.env.API_URL}/login`, options);
+          const response = await fetch(`${process.env.BACKEND_URL}/api/login`, options);
 
           if (response.status === 200) {
             const data = await response.json();
@@ -98,7 +98,7 @@ const getState = ({ getStore, getActions, setStore }) => {
               Authorization: `Bearer ${sessionStorage.getItem("token")}`,
             },
           };
-          const response = await fetch(`${process.env.API_URL}/todos`, options);
+          const response = await fetch(`${process.env.BACKEND_URL}/api/todos`, options);
 
           if (response.status === 401) {
             getActions().logout();
@@ -128,7 +128,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             }),
           };
 
-          const response = await fetch(`${process.env.API_URL}/todo`, options);
+          const response = await fetch(`${process.env.BACKEND_URL}/api/todo`, options);
 
           if (response.status === 401) {
             getActions().logout();
@@ -157,7 +157,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           };
 
           const response = await fetch(
-            `${process.env.API_URL}/todo/${id}`,
+            `${process.env.BACKEND_URL}/api/todo/${id}`,
             options
           );
 
@@ -183,6 +183,43 @@ const getState = ({ getStore, getActions, setStore }) => {
         }
       },
 
+      deleteHabits: async (id) => {
+        try {
+          const options = {
+            method: "DELETE",
+            headers: {
+              Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+            },
+          };
+
+          const response = await fetch(
+            `${process.env.BACKEND_URL}/api/habit/${id}`,
+            options
+          );
+
+          if (response.status === 401) {
+            getActions().logout();
+            return;
+          }
+
+          if (response.status === 200) {
+            const data = await response.json();
+
+            const store = getStore();
+            const deleted_id = data.id;
+
+            const filteredHabits = store.habits.filter(({ id }) => {
+              return id !== deleted_id;
+            });
+
+            setStore({ habits: filteredHabits });
+            window.location.reload();
+          }
+        } catch (error) {
+          console.log("error", error);
+        }
+      },
+
       toggleTodo: async (id) => {
         try {
           const options = {
@@ -193,7 +230,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           };
 
           const response = await fetch(
-            `${process.env.API_URL}/todo/${id}`,
+            `${process.env.BACKEND_URL}/api/todo/${id}`,
             options
           );
 
@@ -232,7 +269,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             },
           };
           const response = await fetch(
-            `${process.env.API_URL}/habits`,
+            `${process.env.BACKEND_URL}/api/habits`,
             options
           );
 
@@ -265,7 +302,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             }),
           };
 
-          const response = await fetch(`${process.env.API_URL}/habit`, options);
+          const response = await fetch(`${process.env.BACKEND_URL}/api/habit`, options);
 
           if (response.status === 401) {
             getActions().logout();
@@ -300,7 +337,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             }),
           };
           const response = await fetch(
-            `${process.env.API_URL}/habit/${id}`,
+            `${process.env.BACKEND_URL}/api/habit/${id}`,
             options
           );
 
@@ -336,7 +373,7 @@ const getState = ({ getStore, getActions, setStore }) => {
               Authorization: `Bearer ${sessionStorage.getItem("token")}`,
             },
           };
-          const response = await fetch(`${process.env.API_URL}/user`, options);
+          const response = await fetch(`${process.env.BACKEND_URL}/api/user`, options);
 
           if (response.status === 401) {
             getActions().logout();
@@ -365,7 +402,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             }),
           };
           const response = await fetch(
-            `${process.env.API_URL}/user/name`,
+            `${process.env.BACKEND_URL}/api/user/name`,
             options
           );
 
@@ -404,7 +441,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             }),
           };
           const response = await fetch(
-            `${process.env.API_URL}/settings`,
+            `${process.env.BACKEND_URL}/api/settings`,
             options
           );
 
@@ -443,7 +480,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             }),
           };
           const response = await fetch(
-            `${process.env.API_URL}/password`,
+            `${process.env.BACKEND_URL}/api/password`,
             options
           );
 
@@ -466,7 +503,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           };
 
           const response = await fetch(
-            `${process.env.API_URL}/habits/reset`,
+            `${process.env.BACKEND_URL}/api/habits/reset`,
             options
           );
 
@@ -496,7 +533,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             },
           };
           const response = await fetch(
-            `${process.env.API_URL}/habits/stats`,
+            `${process.env.BACKEND_URL}/api/habits/stats`,
             options
           );
 

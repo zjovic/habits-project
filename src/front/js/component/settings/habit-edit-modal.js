@@ -47,6 +47,7 @@ export const HabitEditModal = ({ habit }) => {
     modal.hide();
   };
 
+  
   return (
     <div
       className="modal fade"
@@ -140,6 +141,16 @@ export const HabitEditModal = ({ habit }) => {
             >
               Save changes
             </button>
+
+            <button
+              type="button"
+              className="Button Button--confirm"
+              onClick={() => {actions.deleteHabits(habit.id)}}
+              data-bs-dismiss="modal"
+            >
+              Delete
+            </button>
+
           </div>
         </div>
       </div>
